@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Celin.AIS Module
+title: Celin.AIS
 nav_order: 3
 has_children: false
 ---

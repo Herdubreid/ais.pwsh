@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Celin.AIS.Ube Module
+title: Celin.AIS.Ube
 nav_order: 6
 has_children: false
 ---

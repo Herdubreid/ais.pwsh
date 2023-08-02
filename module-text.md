@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Celin.AIS.Text Module
+title: Celin.AIS.Text
 nav_order: 7
 has_children: false
 ---
@@ -54,7 +54,7 @@ _Append_ (Optional)
 
 #### Example
 
-Append the address book attachment.
+Append the address book attachment number 1.
 
 ```powershell
 set-celin.ais.text abgt 4242 `

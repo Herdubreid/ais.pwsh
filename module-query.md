@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Celin.AIS.Query Module
+title: Celin.AIS.Query
 nav_order: 4
 has_children: false
 ---
@@ -34,4 +34,4 @@ $openPos = submit-celin.ais.query `
 all(nxtr bw 280,400)"
 ```
 
-__Note__: The above command use backtick (\`) to continue on the next line.
+__Note__: The above command uses backtick (\`) to continue on the next line.

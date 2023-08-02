@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Celin.AIS.Script Module
+title: Celin.AIS.Script
 nav_order: 5
 has_children: false
 ---

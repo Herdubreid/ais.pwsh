@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Celin.AIS.File Module
+title: Celin.AIS.File
 nav_order: 8
 has_children: false
 ---
@@ -51,7 +51,7 @@ _ItemName_ (Optional)
 
 #### Example
 
-Upload file `celin.png` to address book attachment number 4242.
+Upload local file `celin.png` to address book attachment number 4242.
 
 ```powershell
 $up = set-celin.ais.file abgt 4242 celin.png -ItemName "Smile"
