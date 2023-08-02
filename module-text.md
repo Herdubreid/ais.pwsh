@@ -20,11 +20,11 @@ _Key_
 : Attachment key.
 
 _Sequence_ (Optional)
-: Attachment sequence.
+: Attachment sequence if provided, otherwise all.
 
 #### Example
 
-Get the default address book attachment (`ABGT`) for adress book number 4242.
+Get address book text attachments (`ABGT`) for address book number 4242.
 
 ```powershell
 $tmos = get-celin.ais.text abgt 4242
