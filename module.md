@@ -10,17 +10,17 @@ has_children: false
 ## New-Celin.AIS
 Create a new AIS connection variable.
 
-[-VariableName] <string>
+_VariableName_
 : The PowerShell variable that will store the connection parameters.  This name must be unique for the session.
 
-[-BaseUrl] <string>
+_BaseUrl_
 : The Base URL of the AIS Server.  The Module requires version 2 of AIS.
 
-[-Credential] <pscredential>
-: A User/Password PowerShell Credential object.
+_Credential_
+: A User/Password PowerShell `Credential` object.
 
-[-Log {Warning | Error | Critical | Debug | Trace}]
-:Turn on Logging for AIS Requests/Response.
+_Log_
+:Turn on `Warning`, `Error`, `Critical`, `Debug` or `Trace` Logging for AIS Requests/Response.
 
 ## Connect-Celin.AIS
 
