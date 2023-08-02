@@ -5,9 +5,11 @@ nav_order: 3
 has_children: false
 ---
 
-# Celin.AIS Module
+## Celin.AIS Module
 
-## New-Celin.AIS
+The basic module maintains the connection variable.
+
+### New-Celin.AIS
 
 Create a new AIS connection variable.
 
@@ -21,25 +23,25 @@ _Credential_
 : A User/Password PowerShell `Credential` object.
 
 _Log_ (Optional)
-:Turn on `Warning`, `Error`, `Critical`, `Debug` or `Trace` Logging for AIS Requests/Response.
+: Turn on `Warning`, `Error`, `Critical`, `Debug` or `Trace` Logging for AIS Requests/Response.
 
 The `$env:CELIN_DEFAULT_AIS` will be assigned the new variable name.
 
-## Connect-Celin.AIS
+### Connect-Celin.AIS
 
 Authenticate connection.
 
 _Credential_ (Optional)
 : Override default PowerShell Credentials for authentication.
 
-## Use-Celin.AIS
+### Use-Celin.AIS
 
 Set a new default connection variable.
 
 _VariableName_
 : The name of the new default variable (excluding the `$` sign).
 
-## Save-Celin.AIS
+### Save-Celin.AIS
 
 Export the default connection variable for saving with the `Export-Clixml` command.
 
@@ -55,7 +57,7 @@ Can be restored with:
 Restore-Celin.AIS Demo (import-clixml ./demo.xml)
 ```
 
-## Restore-Celin.AIS
+### Restore-Celin.AIS
 
 Restore default connection from an exported connection.
 
