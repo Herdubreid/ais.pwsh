@@ -12,7 +12,7 @@ nav_order: 2
 Install-Module celin.ais.pwsh
 ```
 
-### Create to AIS Connection
+### Create AIS Connection
 
 ```powershell
 New-Celin.AIS Demo "https://demo.steltix.com"
