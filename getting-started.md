@@ -9,7 +9,7 @@ nav_order: 2
 ## Install Module
 
 ```powershell
-PS > Install-Module celin.ais.pwsh
+Install-Module celin.ais.pwsh
 ```
 
 ## Create to AIS Connection
