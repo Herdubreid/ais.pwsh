@@ -1,1 +1,14 @@
-remote_theme: allejo/jekyll-docs-theme@v1.0.0
+title: Celin.AIS.Pwsh Documentation
+remote_theme: just-the-docs/just-the-docs
+
+baseurl: "/ais.pwsh"
+url: "https://celin.io"
+
+search_enabled: true
+search.heading_level: 3
+
+footer_content: "Copyright &copy; 2023 Finnur Bragason."
+
+# Footer last edited timestamp
+last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
+last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
