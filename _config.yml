@@ -1,6 +1,8 @@
 title: Celin.AIS.Pwsh Documentation
 remote_theme: just-the-docs/just-the-docs
 
+color_scheme: dark
+
 baseurl: "/ais.pwsh"
 url: "https://celin.io"
 
