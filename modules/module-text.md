@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Celin.AIS.Text
-nav_order: 7
-has_children: false
+nav_order: 5
+parent: Modules
 ---
 
 ## Celin.AIS.Text

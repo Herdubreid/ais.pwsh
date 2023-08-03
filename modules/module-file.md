@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Celin.AIS.File
-nav_order: 8
-has_children: false
+nav_order: 6
+parent: Modules
 ---
 
 ## Celin.AIS.File
