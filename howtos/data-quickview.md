@@ -7,7 +7,7 @@ parent: How To's
 
 ## Quick View
 
-How to quickly view the results of an Celin.AIS.Query or Celin.AIS.Script command.
+This is the short introduction to the results of an Celin.AIS.Query or Celin.AIS.Script command.
 
 Let's assume we have the `$ab` of the following Address Book query (from Get Started):
 
@@ -25,7 +25,7 @@ The top layer, or the state gives information such as the source and time of exe
 
 To view the state, simply type the variable name.
 
-![State Result](/img/result-state.png)
+![State Result](img/result-state.png)
 
 Individual state parameters are accessed with the dot operator.  For example to test if the command was successful, we check the `Error` parameter.
 
@@ -33,3 +33,4 @@ Individual state parameters are accessed with the dot operator.  For example to 
 $success = -not $ab.error
 if ($success) { write-host "Success" } else { write-host "Failed" }
 ```
+

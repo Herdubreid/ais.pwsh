@@ -20,7 +20,7 @@ New-Celin.AIS Demo "https://demo.steltix.com"
 
 This command will create a connection with the name `Demo` for  [Steltix's](https://steltix.com) [Demo](https://demo.steltix.com) AIS and prompt for User Name and Password (use 'demo', 'demo').
 
-![Connect](/img/new-connection.png)
+![Connect](img/new-connection.png)
 
 ### Authenticate
 
