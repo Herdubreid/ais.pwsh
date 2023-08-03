@@ -25,12 +25,22 @@ The top layer, or the state gives information such as the source and time of exe
 
 To view the state, simply type the variable name.
 
-![State Result](img/result-state.png)
+![State Result](../img/result-state.png)
 
-Individual state parameters are accessed with the dot operator.  For example to test if the command was successful, we check the `Error` parameter.
+Individual state members are accessed with the dot operator.  For example to test if the command was successful, we check the `Error` member.
 
 ```powershell
 $success = -not $ab.error
 if ($success) { write-host "Success" } else { write-host "Failed" }
 ```
+
+**Note** PowerShell is not case sensitive, so `Error` and `error` are equivalent.
+
+## The Data
+
+Most of the time the interest is on the `Data` member, exception being update scripts where success/failure is the only relevant result.
+
+The `Data` members can be accessed with the dot operator, but a more informative display can be achieved with the `Get-Member` command.
+
+![Data Result](../img/result-data.png)
 
