@@ -23,4 +23,4 @@ $pos = submit-celin.ais.query "w4312f zjde0001 -max no"
 $pos.data.grid.detail.totable($pos.data.grid.header.names) | export-excel -show
 ```
 
-The resulting `Detal` object is converted using the `ToTable(string[] columns)` method with the `Name` property of the `Header` object.
+The resulting `Detail` object is converted using the `ToTable(string[] columns)` method with the `Name` property of the `Header` object.
