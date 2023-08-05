@@ -7,7 +7,7 @@ parent: How To's
 
 ## Open in Excel
 
-When it comes to analysing data, it's hard to overlook Excel.  There are few options for loading PowerShell data into Excel and one of them is to used the [ImportExcel](https://www.powershellgallery.com/packages/ImportExcel/7.8.5) Module.
+When it comes to analysing data, it's hard to overlook Excel.  There are few options for loading PowerShell data into Excel and one of them is the [ImportExcel](https://www.powershellgallery.com/packages/ImportExcel/7.8.5) Module.
 
 ```powershell
 install-module importexcel
