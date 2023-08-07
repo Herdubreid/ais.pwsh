@@ -21,6 +21,9 @@ A more realistic example would be where the source data is extracted from an Exc
 - Close the `App Stack`.
 
 ```powershell
+# Make sure we have the latest celin.ais.pwsh version 
+update-module celin.ais.pwsh
+
 # Sales Category Codes 4
 $rq = submit-celin.ais.query "f0005 (dl01,ky) all(sy=41 rt=S4)"
 # Get the grid
