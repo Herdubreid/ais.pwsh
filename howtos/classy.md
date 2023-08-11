@@ -47,43 +47,39 @@ Here we have encapsulated the functions to use in the `W4312F` and `W4312A` form
 ```powershell
 # Work With Open PO's type
 class w4312f : jdeGridForm {
-  # Select a Row
   [void] select([int]$row) {
-    $rs = step-celin.ais.script "select(1.$row) do(4)" -returnControlIDs ([w4312a]::ctrlIds)
+    $rs = step-celin.ais.script "select(1.$row) do(4)" -returnControlIDs ($global:ctrlIDs["w4312a"])
     [jdeForm]::update($rs)
   }
-  # Open Form
   static open() {
-    $rs = open-celin.ais.script "w4312f zjde0006" "do(21)" -max -1 -returnControlIDs ([w4312f]::ctrlIds)
+    $rs = open-celin.ais.script "w4312f zjde0006" "do(21)" -max -1 -returnControlIDs ($global:ctrlIDs["w4312f"])
     [jdeForm]::update($rs)
   }
   w4312f($rs) : base($rs) {}
-  static [string] $ctrlIds = "97|85|1[16,41,25,10,11,14,91,92]"
 }
-# add the type and set returnControlIDs
+# Add the returnControlIDs
+$ctrlIDs["w4312f"] = "97|85|1[16,41,25,10,11,14,91,92]"
+# Add the type
 [jdeForm]::types.add(@{ Name = "*W4312F*"; Type = [w4312f] })
-
 # Receipt a PO type
 class w4312a : jdeGridForm {
-  # Flag the Line for Receipting
   [void] receipt([int]$row) {
-    $rs = step-celin.ais.script "update[1 ${row}:(382:1,117: )]" -returnControlIDs ([w4312a]::ctrlIds)
+    $rs = step-celin.ais.script "update[1 ${row}:(382:1,117: )]" -returnControlIDs ($global:ctrlIDs["w4312a"])
     [jdeForm]::update($rs)
   }
-  # Press the Ok Button
   [void] ok() {
-    $r = step-celin.ais.script "do(4)" -returnControlIDs ([w4312f]::ctrlIds)
+    $r = step-celin.ais.script "do(4)" -returnControlIDs ($global:ctrlIDs["w4312f"])
     [jdeForm]::update($r)
   }
-  # Press the Cancel Button
   [void] cancel() {
-    $r = step-celin.ais.script "do(5)" -returnControlIDs ([w4312f]::ctrlIds)
+    $r = step-celin.ais.script "do(5)" -returnControlIDs ($global:ctrlIDs["w4312f"])
     [jdeForm]::update($r)
   }
   w4312a($rs) : base($rs) {}
-  static [string] $ctrlIds = "1[382,116,117,103,40,44]"
 }
-# add the type and set returnControlIDs
+# Add the returnControlIDs
+$ctrlIDs["w4312a"] = "1[382,116,117,103,40,44]"
+# Add the type
 [jdeForm]::types.add(@{ Name = "*W4312A*"; Type = [w4312a] })
 ```
 
@@ -92,6 +88,8 @@ class w4312a : jdeGridForm {
 The common elements of the forms are encapsulated in the `class jdeForm` and its derivative `class jdeGridForm`.
 
 ```powershell
+# Declare the ctrlIDs hashtable
+$ctrlIDs = @{}
 # The base form class
 class jdeForm {
   $rs
@@ -145,7 +143,6 @@ class jdeForm {
     $global:jde = $type::new($rs)
   }
 }
-
 # A form with grid
 class jdeGridForm : jdeForm {
   $useNames = $false
