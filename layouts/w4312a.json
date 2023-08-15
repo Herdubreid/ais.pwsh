@@ -1,5 +1,5 @@
 {
-  "title": "Open PO's",
+  "title": "Receipt Lines",
   "normal": {
     "backGround": "Black",
     "foreGround": "Green"
@@ -12,7 +12,7 @@
   "controls": [
     {
       "controlType": "view",
-      "text": "\n       Open Qty Item                                           Date    Order\n",
+      "text": "\n            Qty       Amount Item                                         Line\n",
       "normal": {
         "backGround": "Black",
         "foreGround": "BrightYellow"
@@ -20,7 +20,7 @@
     },
     {
       "controlType": "list",
-      "rowFormat": "{0,12:N} {2,-30} {1,-12} {6,-10:d} {4} {3,8}"
+      "rowFormat": "{1,12} {2,12:N} {4,-30} {3,-12} {5,4}"
     }
   ]
 }
