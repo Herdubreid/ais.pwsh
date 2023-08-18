@@ -11,7 +11,7 @@
   "borderStyle": "None",
   "controls": [
     {
-      "controlType": "view",
+      "type": "view",
       "text": "\n            Qty       Amount Item                                         Line\n",
       "normal": {
         "backGround": "Black",
@@ -19,7 +19,7 @@
       }
     },
     {
-      "controlType": "list",
+      "type": "list",
       "rowFormat": "{1,12} {2,12:N} {4,-30} {3,-12} {5,4}"
     }
   ]
