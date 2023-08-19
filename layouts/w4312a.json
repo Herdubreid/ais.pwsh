@@ -9,7 +9,7 @@
     "foreGround": "BrightGreen"
   },
   "borderStyle": "None",
-  "controls": [
+  "child": [
     {
       "type": "view",
       "text": "\n            Qty       Amount Item                                         Line\n",
