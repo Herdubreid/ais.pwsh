@@ -7,7 +7,7 @@
   "Child": {
     "normal": {
       "backGround": "Black",
-      "color": "Cyan"
+      "foreGround": "Cyan"
     },
     "widthDim": "Percent",
     "width": 50,
