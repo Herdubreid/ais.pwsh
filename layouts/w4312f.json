@@ -9,18 +9,18 @@
     "foreGround": "BrightGreen"
   },
   "borderStyle": "None",
-  "child": [
-    {
-      "type": "view",
-      "text": "\n       Open Qty Item                                           Date    Order\n",
+  "child": {
+    "header": {
       "normal": {
         "backGround": "Black",
         "foreGround": "BrightYellow"
-      }
+      },
+      "format": "{0,12} {1,-30} {2,-12} {3,-10}",
+      "data": ["Open Qty", "Item", "", "Date"]
     },
-    {
-      "type": "list",
-      "rowFormat": "{0,12:N} {2,-30} {1,-12} {6,-10:d} {4} {3,8}"
+    "body": {
+      "format": "{0,12:N} {2,-30} {1,-12} {6,-10:d} {4} {3,8}",
+      "data": []
     }
-  ]
+  }
 }

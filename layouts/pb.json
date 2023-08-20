@@ -1,0 +1,18 @@
+{
+  "title": "$title",
+  "normal": {
+    "backGround": "Black",
+    "foreGround": "Green"
+  },
+  "Child": {
+    "normal": {
+      "backGround": "Black",
+      "color": "Cyan"
+    },
+    "widthDim": "Percent",
+    "width": 50,
+    "height": 4,
+    "style": "MarqueeBlocks",
+    "frequency": 100
+  }
+}
