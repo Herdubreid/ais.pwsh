@@ -37,9 +37,9 @@ class jdeForm {
   }
   [void] static update($rs) {
     # Write any error text
-    if ($null -ne $rs.error) {
-      write-host $rs.error -foregroundColor red
-    }
+    # if ($null -ne $rs.error) {
+    #  write-host $rs.error -foregroundColor red
+    #}
     # Update the connection object
     set-variable $env:CELIN_DEFAULT_AIS (get-variable $env:CELIN_DEFAULT_AIS).value -scope Global
     # Get the type
