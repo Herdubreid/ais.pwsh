@@ -9,18 +9,29 @@
     "foreGround": "BrightGreen"
   },
   "borderStyle": "None",
-  "child": [
-    {
-      "type": "view",
-      "text": "\n            Qty       Amount Item                                         Line\n",
+  "child": {
+    "header": {
       "normal": {
         "backGround": "Black",
         "foreGround": "BrightYellow"
-      }
+      },
+      "format": "{1,12} {2,12} {4,-30} {3,-12} {5,4}",
+      "data": []
     },
-    {
-      "type": "list",
-      "rowFormat": "{1,12} {2,12:N} {4,-30} {3,-12} {5,4}"
+    "body": {
+      "format": "{1,12} {2,12:N} {4,-30} {3,-12} {5,4}",
+      "data": []
+    },
+    "statusBar": {
+      "normal": {
+        "backGround": "Black",
+        "foreGround": "Green"
+      },
+      "hotNormal": {
+        "backGround": "Black",
+        "foreGround": "BrightYellow"
+      },
+      "items": []
     }
-  ]
+  }
 }
