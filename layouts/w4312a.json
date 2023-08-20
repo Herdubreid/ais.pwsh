@@ -15,7 +15,7 @@
         "backGround": "Black",
         "foreGround": "BrightYellow"
       },
-      "format": "{1,12} {2,12} {4,-43} {5,4}",
+      "format": "{1,12} {2,12} {3,-43} {4,4}",
       "data": ["Qty", "Amount", "Item", "Line"]
     },
     "body": {
