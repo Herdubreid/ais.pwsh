@@ -15,7 +15,7 @@
         "backGround": "Black",
         "foreGround": "BrightYellow"
       },
-      "format": "{0,12} {1,-43} {2,-10}",
+      "format": "Opt{0,12} {1,-43} {2,-10}",
       "data": ["Open Qty", "Item", "Date"]
     },
     "body": {
