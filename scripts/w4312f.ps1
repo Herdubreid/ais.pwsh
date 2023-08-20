@@ -1,7 +1,7 @@
 # Work With Open PO's type
 class w4312f : jdeGridForm {
   [void] find() {
-    $rs = step-celin.ais.script "do(21)"
+    $rs = step-celin.ais.script "do(21)" -max -1 -returnControlIDs ($global:ctrlIDs["w4312f"])
     [jdeForm]::update($rs)
   }
   [void] select([int]$row) {
