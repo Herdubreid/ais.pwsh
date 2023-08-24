@@ -1,19 +1,23 @@
 {
   "title": "Open PO's",
-  "normal": {
-    "backGround": "Black",
-    "foreGround": "Green"
-  },
-  "focus": {
-    "backGround": "Black",
-    "foreGround": "BrightGreen"
+  "color": {
+    "normal": {
+      "backGround": "Black",
+      "foreGround": "Green"
+    },
+    "focus": {
+      "backGround": "Black",
+      "foreGround": "BrightGreen"
+    }
   },
   "borderStyle": "None",
   "child": {
     "header": {
-      "normal": {
-        "backGround": "Black",
-        "foreGround": "BrightYellow"
+      "color": {
+        "normal": {
+          "backGround": "Black",
+          "foreGround": "BrightYellow"
+        }
       },
       "format": "Opt{0,12} {1,-43} {2,-10}",
       "data": ["Open Qty", "Item", "Date"]
@@ -23,13 +27,15 @@
       "data": []
     },
     "statusBar": {
-      "normal": {
-        "backGround": "Black",
-        "foreGround": "Green"
-      },
-      "hotNormal": {
-        "backGround": "Black",
-        "foreGround": "BrightYellow"
+      "color": {
+        "normal": {
+          "backGround": "Black",
+          "foreGround": "Green"
+        },
+        "hotNormal": {
+          "backGround": "Black",
+          "foreGround": "BrightYellow"
+        }
       },
       "items": []
     }
