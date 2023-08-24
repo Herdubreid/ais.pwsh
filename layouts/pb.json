@@ -1,13 +1,17 @@
 {
   "title": "Working...",
-  "normal": {
-    "backGround": "Black",
-    "foreGround": "Green"
-  },
-  "Child": {
+  "color": {
     "normal": {
       "backGround": "Black",
-      "foreGround": "Cyan"
+      "foreGround": "Green"
+    }
+  },
+  "Child": {
+    "color": {
+      "normal": {
+        "backGround": "Black",
+        "foreGround": "Cyan"
+      }
     },
     "widthDim": "Percent",
     "width": 50,

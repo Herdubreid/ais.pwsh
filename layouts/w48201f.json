@@ -1,19 +1,23 @@
 {
   "title": "Work Order List",
-  "normal": {
-    "backGround": "Black",
-    "foreGround": "Green"
-  },
-  "focus": {
-    "backGround": "Black",
-    "foreGround": "BrightGreen"
+  "color": {
+    "normal": {
+      "backGround": "Black",
+      "foreGround": "Green"
+    },
+    "focus": {
+      "backGround": "Black",
+      "foreGround": "BrightGreen"
+    }
   },
   "borderStyle": "None",
   "child": {
     "header": {
-      "normal": {
-        "backGround": "Black",
-        "foreGround": "BrightYellow"
+      "color": {
+        "normal": {
+          "backGround": "Black",
+          "foreGround": "BrightYellow"
+        }
       },
       "format": "Opt{0,8} {1,-30} {2,-15} {3, -15} {4, -38} {5}",
       "data": [
@@ -22,20 +26,23 @@
         "Status",
         "Type",
         "Equipment",
-        "Planned Start"]
+        "Planned Start"
+      ]
     },
     "body": {
       "format": "{0,8:N} {1,-30} {2,-15} {3,-15} {4,-8} {5, -30} {6, 8}",
       "data": []
     },
     "statusBar": {
-      "normal": {
-        "backGround": "Black",
-        "foreGround": "Green"
-      },
-      "hotNormal": {
-        "backGround": "Black",
-        "foreGround": "BrightYellow"
+      "color": {
+        "normal": {
+          "backGround": "Black",
+          "foreGround": "Green"
+        },
+        "hotNormal": {
+          "backGround": "Black",
+          "foreGround": "BrightYellow"
+        }
       },
       "items": []
     }

@@ -1,15 +1,19 @@
 {
   "title": "Error",
-  "normal": {
-    "backGround": "Black",
-    "foreGround": "Green"
+  "color": {
+    "normal": {
+      "backGround": "Black",
+      "foreGround": "Green"
+    }
   },
   "borderStyle": "None",
   "child": {
     "message": {
-      "normal": {
-        "backGround": "Black",
-        "foreGround": "BrightRed"
+      "color": {
+        "normal": {
+          "backGround": "Black",
+          "foreGround": "BrightRed"
+        }
       },
       "text": "Message"
     },
