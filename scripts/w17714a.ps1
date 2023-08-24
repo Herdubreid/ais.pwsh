@@ -7,7 +7,7 @@ class w17714a : jdeGridForm {
     $r = step-celin.ais.script "do(12)"
     [jdeForm]::update($r)
   }
-  w4312a($rs) : base($rs) {}
+  w17714a($rs) : base($rs) {}
 }
 # Add the returnControlIDs
 $ctrlIDs["w17714a"] = "508|510|208|210|400"
