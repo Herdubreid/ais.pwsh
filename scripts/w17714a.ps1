@@ -1,4 +1,4 @@
-class w17714a : jdeGridForm {
+class w17714a : jdeForm {
   [void] ok() {
     $r = step-celin.ais.script "do(11)"
     [jdeForm]::update($r)

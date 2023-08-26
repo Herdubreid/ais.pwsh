@@ -1,0 +1,62 @@
+{
+  "title": "Revise WO Amounts",
+  "color": {
+    "normal": {
+      "backGround": "Black",
+      "foreGround": "Green"
+    }
+  },
+  "borderStyle": "None",
+  "child": {
+    "fieldColor": {
+      "normal": {
+        "backGround": "Black",
+        "foreGround": "Brown"
+      },
+      "focus": {
+        "backGround": "Black",
+        "foreGround": "BrightYellow"
+      }
+    },
+    "panes": [
+      {
+        "top": 1,
+        "left": 4,
+        "margin": 1,
+        "length": 30,
+        "alignment": "right",
+        "fields": [
+          {
+            "type": "Number",
+            "size": 4
+          },
+          {
+            "type": "Number",
+            "size": 4
+          },
+          {
+            "type": "Decimal",
+            "size": 12
+          },
+          {
+            "type": "Decimal",
+            "size": 12
+          }
+        ]
+      }
+    ],
+    "statusBar": {
+      "color": {
+        "normal": {
+          "backGround": "Black",
+          "foreGround": "Green"
+        },
+        "hotNormal": {
+          "backGround": "Black",
+          "foreGround": "BrightYellow"
+        }
+      },
+      "items": []
+    }
+  }
+}
