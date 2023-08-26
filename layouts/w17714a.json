@@ -21,24 +21,28 @@
     "panes": [
       {
         "top": 1,
-        "left": 4,
+        "left": "pos(50)",
         "margin": 1,
         "length": 30,
         "alignment": "right",
         "fields": [
           {
+            "id": 508,
             "type": "Number",
             "size": 4
           },
           {
+            "id": 510,
             "type": "Number",
             "size": 4
           },
           {
+            "id": 208,
             "type": "Decimal",
             "size": 12
           },
           {
+            "id": 210,
             "type": "Decimal",
             "size": 12
           }

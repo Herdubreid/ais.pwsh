@@ -17,6 +17,23 @@ class jdeForm {
       $this | get-member
     )
   }
+  # Map parameters
+  [void] map($panes) {
+    foreach ($pane in $panes) {
+      foreach ($item in $pane.fields) {
+        $fld = $this.rs.data.form | Where-Object Id -eq $item.Id
+        if ($null -ne $fld) {
+          $item.text = $fld.title
+          $item.value = $fld.value
+        }
+      }        
+    }
+  }
+  # Create set string
+  [string] set($fm) {
+    $a = $fm | foreach-object { "set($($_.id), $($_.value))" }
+    return $a -join " "
+  }
   jdeForm($rs) {
     $this.rs = $rs
     # Members
@@ -36,10 +53,6 @@ class jdeForm {
     }
   }
   [void] static update($rs) {
-    # Write any error text
-    # if ($null -ne $rs.error) {
-    #  write-host $rs.error -foregroundColor red
-    #}
     # Update the connection object
     set-variable $env:CELIN_DEFAULT_AIS (get-variable $env:CELIN_DEFAULT_AIS).value -scope Global
     # Get the type

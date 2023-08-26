@@ -1,6 +1,7 @@
 class w17714a : jdeForm {
-  [void] ok() {
-    $r = step-celin.ais.script "do(11)"
+  [void] ok($fm) {
+    $s = set($fm)
+    $r = step-celin.ais.script "$s do(11)"
     [jdeForm]::update($r)
   }
   [void] cancel() {
@@ -10,6 +11,6 @@ class w17714a : jdeForm {
   w17714a($rs) : base($rs) {}
 }
 # Add the returnControlIDs
-$ctrlIDs["w17714a"] = "508|510|208|210|400"
+$ctrlIDs["w17714a"] = "508|510|208|210"
 # Add the type
 [jdeForm]::types.add(@{ Name = "*W17714A*"; Type = [w17714a] })
