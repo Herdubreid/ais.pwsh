@@ -1,0 +1,15 @@
+[
+    {
+        "name": "green",
+        "color": {
+            "normal": {
+                "backGround": "Black",
+                "foreGround": "Green"
+            },
+            "focus": {
+                "backGround": "Black",
+                "foreGround": "BrightGreen"
+            }
+        }
+    }
+]
