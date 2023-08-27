@@ -111,6 +111,14 @@
         "hotNormal": {
           "backGround": "Black",
           "foreGround": "BrightYellow"
+        },
+        "focus": {
+          "backGround": "Black",
+          "foreGround": "White"
+        },
+        "hotFocus": {
+          "backGround": "Black",
+          "foreGround": "White"
         }
       },
       "items": []
