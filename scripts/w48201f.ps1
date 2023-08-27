@@ -5,7 +5,7 @@ class w48201f : jdeGridForm {
     [jdeForm]::update($rs)
   }
   [void] select([int]$row) {
-    $rs = step-celin.ais.script "select(1.$row) do(4)" -returnControlIDs ($global:ctrlIDs["w17714a"])
+    $rs = step-celin.ais.script "unselectAll(1) select(1.$($row)) do(4)" -returnControlIDs ($global:ctrlIDs["w17714a"])
     [jdeForm]::update($rs)
   }
   static open() {
