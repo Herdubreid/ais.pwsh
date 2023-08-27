@@ -1,6 +1,6 @@
 class w17714a : jdeForm {
   [void] ok($fm) {
-    $s = set($fm)
+    $s = $this.set($fm)
     $r = step-celin.ais.script "$s do(11)"
     [jdeForm]::update($r)
   }

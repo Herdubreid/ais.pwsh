@@ -21,7 +21,7 @@
     "panes": [
       {
         "top": 1,
-        "left": "pos(50)",
+        "left": "50%",
         "margin": 1,
         "length": 30,
         "alignment": "right",
