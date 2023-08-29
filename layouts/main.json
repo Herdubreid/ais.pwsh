@@ -1,0 +1,18 @@
+{
+  "normal": {
+    "backGround": "Black",
+    "foreGround": "Green"
+  },
+  "hotNormal": {
+    "backGround": "Black",
+    "foreGround": "Brown"
+  },
+  "focus": {
+    "backGround": "Black",
+    "foreGround": "BrightGreen"
+  },
+  "hotFocus": {
+    "backGround": "Black",
+    "foreGround": "BrightYellow"
+  }
+}

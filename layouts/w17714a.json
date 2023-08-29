@@ -1,23 +1,6 @@
 {
   "title": "Revise WO Amounts",
-  "color": {
-    "normal": {
-      "backGround": "Black",
-      "foreGround": "Green"
-    }
-  },
-  "borderStyle": "None",
   "child": {
-    "fieldColor": {
-      "normal": {
-        "backGround": "Black",
-        "foreGround": "Brown"
-      },
-      "focus": {
-        "backGround": "Black",
-        "foreGround": "BrightYellow"
-      }
-    },
     "panes": [
       {
         "top": 1,
@@ -103,24 +86,6 @@
       }
     ],
     "statusBar": {
-      "color": {
-        "normal": {
-          "backGround": "Black",
-          "foreGround": "Green"
-        },
-        "hotNormal": {
-          "backGround": "Black",
-          "foreGround": "BrightYellow"
-        },
-        "focus": {
-          "backGround": "Black",
-          "foreGround": "White"
-        },
-        "hotFocus": {
-          "backGround": "Black",
-          "foreGround": "White"
-        }
-      },
       "items": []
     }
   }

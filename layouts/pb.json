@@ -1,21 +1,9 @@
 {
-  "title": "Working...",
-  "color": {
-    "normal": {
-      "backGround": "Black",
-      "foreGround": "Green"
-    }
-  },
-  "Child": {
-    "color": {
-      "normal": {
-        "backGround": "Black",
-        "foreGround": "Cyan"
-      }
-    },
-    "widthDim": "Percent",
-    "width": 50,
-    "height": 4,
+  "text": "Working...",
+  "child": {
+    "left": "center",
+    "width": "50%",
+    "top": "center",
     "style": "MarqueeBlocks",
     "frequency": 100
   }

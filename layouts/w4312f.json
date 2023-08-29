@@ -1,24 +1,7 @@
 {
-  "title": "Open PO's",
-  "color": {
-    "normal": {
-      "backGround": "Black",
-      "foreGround": "Green"
-    },
-    "focus": {
-      "backGround": "Black",
-      "foreGround": "BrightGreen"
-    }
-  },
-  "borderStyle": "None",
+  "text": "Open PO's",
   "child": {
     "header": {
-      "color": {
-        "normal": {
-          "backGround": "Black",
-          "foreGround": "BrightYellow"
-        }
-      },
       "format": "Opt{0,12} {1,-43} {2,-10}",
       "data": ["Open Qty", "Item", "Date"]
     },
@@ -27,16 +10,6 @@
       "data": []
     },
     "statusBar": {
-      "color": {
-        "normal": {
-          "backGround": "Black",
-          "foreGround": "Green"
-        },
-        "hotNormal": {
-          "backGround": "Black",
-          "foreGround": "BrightYellow"
-        }
-      },
       "items": []
     }
   }

@@ -1,21 +1,13 @@
 {
-  "title": "Error",
-  "color": {
-    "normal": {
-      "backGround": "Black",
-      "foreGround": "Green"
-    }
-  },
-  "borderStyle": "None",
+  "text": "Error",
+  "color": "alert",
   "child": {
     "message": {
-      "color": {
-        "normal": {
-          "backGround": "Black",
-          "foreGround": "BrightRed"
-        }
-      },
-      "text": "Message"
+      "color": "alert",
+      "left": "center",
+      "width": "50%",
+      "top": "25%",
+      "text": "Error Message Here..."
     },
     "options": [
       { "text": "Cancel", "option": 0 },
