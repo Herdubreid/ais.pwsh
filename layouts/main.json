@@ -14,5 +14,9 @@
   "hotFocus": {
     "backGround": "Black",
     "foreGround": "BrightYellow"
+  },
+  "disabled": {
+    "backGround": "Black",
+    "foreGround": "Brown"
   }
 }
