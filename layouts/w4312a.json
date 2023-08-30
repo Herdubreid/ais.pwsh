@@ -1,24 +1,7 @@
 {
-  "title": "Receipt Lines",
-  "color": {
-    "normal": {
-      "backGround": "Black",
-      "foreGround": "Green"
-    },
-    "focus": {
-      "backGround": "Black",
-      "foreGround": "BrightGreen"
-    }
-  },
-  "borderStyle": "None",
+  "text": "Receipt Lines",
   "child": {
     "header": {
-      "color": {
-        "normal": {
-          "backGround": "Black",
-          "foreGround": "BrightYellow"
-        }
-      },
       "format": "Opt{0,12} {1,12} {2,-43} {3,4}",
       "data": ["Qty", "Amount", "Item", "Line"]
     },
@@ -27,16 +10,6 @@
       "data": []
     },
     "statusBar": {
-      "color": {
-        "normal": {
-          "backGround": "Black",
-          "foreGround": "Green"
-        },
-        "hotNormal": {
-          "backGround": "Black",
-          "foreGround": "BrightYellow"
-        }
-      },
       "items": []
     }
   }
