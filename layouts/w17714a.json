@@ -1,92 +1,90 @@
 {
-  "text": "Revise WO Amounts",
-  "child": {
-    "panes": [
-      {
-        "top": 1,
-        "left": 2,
-        "margin": 1,
-        "horizontal": true,
-        "fields": [
-          {
-            "id": 16,
-            "type": "number",
-            "size": 8,
-            "readonly": true
-          },
-          {
-            "id": 152,
-            "type": "text",
-            "size": 30,
-            "readonly": true
-          }
-        ]
-      },
-      {
-        "top": 4,
-        "left": 2,
-        "margin": 1,
-        "Length": 30,
-        "alignment": "right",
-        "fields": [
-          {
-            "id": 299,
-            "type": "number",
-            "size": 4,
-            "readonly": true
-          },
-          {
-            "id": 481,
-            "type": "number",
-            "size": 4,
-            "readonly": true
-          },
-          {
-            "id": 206,
-            "type": "decimal",
-            "size": 12,
-            "readonly": true
-          },
-          {
-            "id": 173,
-            "type": "decimal",
-            "size": 12,
-            "readonly": true
-          }
-        ]
-      },
-      {
-        "top": 4,
-        "left": "50%",
-        "margin": 1,
-        "length": 30,
-        "alignment": "right",
-        "fields": [
-          {
-            "id": 508,
-            "type": "Number",
-            "size": 4
-          },
-          {
-            "id": 510,
-            "type": "Number",
-            "size": 4
-          },
-          {
-            "id": 208,
-            "type": "Decimal",
-            "size": 12
-          },
-          {
-            "id": 210,
-            "type": "Decimal",
-            "size": 12
-          }
-        ]
-      }
-    ],
-    "statusBar": {
-      "items": []
+  "title": "Revise WO Amounts",
+  "panes": [
+    {
+      "top": 1,
+      "left": 2,
+      "margin": 1,
+      "horizontal": true,
+      "fields": [
+        {
+          "id": 16,
+          "type": "number",
+          "size": 8,
+          "readonly": true
+        },
+        {
+          "id": 152,
+          "type": "text",
+          "size": 30,
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "top": 4,
+      "left": 2,
+      "margin": 1,
+      "Length": 30,
+      "alignment": "right",
+      "fields": [
+        {
+          "id": 299,
+          "type": "number",
+          "size": 4,
+          "readonly": true
+        },
+        {
+          "id": 481,
+          "type": "number",
+          "size": 4,
+          "readonly": true
+        },
+        {
+          "id": 206,
+          "type": "decimal",
+          "size": 12,
+          "readonly": true
+        },
+        {
+          "id": 173,
+          "type": "decimal",
+          "size": 12,
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "top": 4,
+      "left": "50%",
+      "margin": 1,
+      "length": 30,
+      "alignment": "right",
+      "fields": [
+        {
+          "id": 508,
+          "type": "Number",
+          "size": 4
+        },
+        {
+          "id": 510,
+          "type": "Number",
+          "size": 4
+        },
+        {
+          "id": 208,
+          "type": "Decimal",
+          "size": 12
+        },
+        {
+          "id": 210,
+          "type": "Decimal",
+          "size": 12
+        }
+      ]
     }
+  ],
+  "statusBar": {
+    "items": []
   }
 }

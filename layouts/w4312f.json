@@ -1,16 +1,18 @@
 {
-  "text": "Open PO's",
-  "child": {
-    "header": {
-      "format": "Opt{0,12} {1,-43} {2,-10}",
-      "data": ["Open Qty", "Item", "Date"]
-    },
-    "body": {
-      "format": "{0,12:N} {2,-30} {1,-12} {6,-10:d} {4} {3,8}",
-      "data": []
-    },
-    "statusBar": {
-      "items": []
-    }
+  "title": "Open PO's",
+  "header": {
+    "format": "Opt{0,12} {1,-43} {2,-10}",
+    "data": [
+      "Open Qty",
+      "Item",
+      "Date"
+    ]
+  },
+  "body": {
+    "format": "{0,12:N} {2,-30} {1,-12} {6,-10:d} {4} {3,8}",
+    "data": []
+  },
+  "statusBar": {
+    "items": []
   }
 }

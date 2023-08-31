@@ -1,23 +1,21 @@
 {
-  "text": "Work Order List",
-  "child": {
-    "header": {
-      "format": "Opt{0,8} {1,-30} {2,-30} {3, -30} {4, -38} {5}",
-      "data": [
-        "Order",
-        "Description",
-        "Status",
-        "Type",
-        "Equipment",
-        "Planned Start"
-      ]
-    },
-    "body": {
-      "format": "{0,8} {1,-30} {2,-30} {3,-30} {4,-8} {5, -30} {6, 10:d}",
-      "data": []
-    },
-    "statusBar": {
-      "items": []
-    }
+  "title": "Work Order List",
+  "header": {
+    "format": "Opt{0,8} {1,-30} {2,-30} {3, -30} {4, -38} {5}",
+    "data": [
+      "Order",
+      "Description",
+      "Status",
+      "Type",
+      "Equipment",
+      "Planned Start"
+    ]
+  },
+  "body": {
+    "format": "{0,8} {1,-30} {2,-30} {3,-30} {4,-8} {5, -30} {6, 10:d}",
+    "data": []
+  },
+  "statusBar": {
+    "items": []
   }
 }

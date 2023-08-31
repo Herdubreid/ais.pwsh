@@ -1,16 +1,19 @@
 {
-  "text": "Receipt Lines",
-  "child": {
-    "header": {
-      "format": "Opt{0,12} {1,12} {2,-43} {3,4}",
-      "data": ["Qty", "Amount", "Item", "Line"]
-    },
-    "body": {
-      "format": "{1,12} {2,12:N} {4,-30} {3,-12} {5,4}",
-      "data": []
-    },
-    "statusBar": {
-      "items": []
-    }
+  "title": "Receipt Lines",
+  "header": {
+    "format": "Opt{0,12} {1,12} {2,-43} {3,4}",
+    "data": [
+      "Qty",
+      "Amount",
+      "Item",
+      "Line"
+    ]
+  },
+  "body": {
+    "format": "{1,12} {2,12:N} {4,-30} {3,-12} {5,4}",
+    "data": []
+  },
+  "statusBar": {
+    "items": []
   }
 }

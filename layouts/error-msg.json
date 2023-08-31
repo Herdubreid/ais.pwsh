@@ -1,17 +1,20 @@
 {
-  "text": "Error",
-  "color": "alert",
-  "child": {
-    "message": {
+  "title": "Error",
+  "message": {
       "color": "alert",
       "left": "center",
       "width": "50%",
       "top": "25%",
       "text": "Error Message Here..."
-    },
-    "options": [
-      { "text": "Cancel", "option": 0 },
-      { "text": "Continue", "option": 1 }
-    ]
-  }
+  },
+  "options": [
+      {
+          "text": "Cancel",
+          "option": 0
+      },
+      {
+          "text": "Continue",
+          "option": 1
+      }
+  ]
 }
