@@ -3,7 +3,7 @@
 
 set-celin.ais.ui main (get-layout dark)
 $search = convertFrom-celin.ais.ui.form (get-layout form-search)
-$select = convertfrom-celin.ais.ui.gridform (get-content form-select)
+$select = convertfrom-celin.ais.ui.gridform (get-layout form-select)
 
 do {
     $flt = show-celin.ais.ui.form $search
