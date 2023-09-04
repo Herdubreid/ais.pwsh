@@ -1,5 +1,5 @@
 # Init
-get-script qop, make-class
+. get-script qop, make-class
     
 set-celin.ais.ui main (get-layout dark)
 $search = convertFrom-celin.ais.ui.form (get-layout form-search)
