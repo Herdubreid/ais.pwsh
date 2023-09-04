@@ -1,13 +1,16 @@
 # Init
-. get-script qop,make-class
+. get-script qop
     
 set-celin.ais.ui main (get-layout dark)
-$search = convertFrom-celin.ais.ui.form (get-layout form-search)
-$select = convertfrom-celin.ais.ui.gridform (get-layout form-select)
-    
+$search = convertFrom-celin.ais.ui.form (get-layout item-search)
+$select = convertfrom-celin.ais.ui.gridform (get-layout item-select)
+
 $flt = show-celin.ais.ui.form $search
-$s = "f9865 (fmnm,md,fmpt,sy) all($(qop "fmnm" "^" $flt[0].value.toupper()) $(qop "md" "?" $flt[1].value) $(qop "fmpt" "=" $flt[2].value.toupper()) $(qop "sy" "^" $flt[3].value)".trim() + ")"
-    
+$q = "all($(qop "1[123]" "?" $flt[0].value.toupper())) "
+$q += ($flt[1].value.split(' ') | foreach-object {
+     "any($(qop "1[9]" "?" $_) $(qop "1[82]" "?" $_))"
+    }) -join ' '
+
 $rs = submit-celin.ais.query $s
 $select.body.data = $rs.data.grid.detail
     

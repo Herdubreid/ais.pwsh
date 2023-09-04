@@ -8,10 +8,10 @@ function makeClass {
     $s += "# $($c.value.type) $($c.key), $($c.value.title)`n"
   }
   $s += "
-class $name : jdeGridForm { `
-  $name(`$rs) : base(`$rs) {}
+class $($name.tolower()) : jdeGridForm { `
+  $($name.tolower())(`$rs) : base(`$rs) {}
 }
-`$ctrlIDs[`"$name`"] = `"$($demo.returnControlIDs)`"
-[jdeForm]::types.add(@{ Name = `"*$($name.toupper())*`"; Type = [$name] })"
+`$ctrlIDs[`"$($name.tolower())`"] = `"$($demo.returnControlIDs)`"
+[jdeForm]::types.add(@{ Name = `"*$($name.toupper())*`"; Type = [$($name.tolower())] })"
   return $s
 }
