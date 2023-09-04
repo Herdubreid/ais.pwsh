@@ -1,0 +1,19 @@
+{
+    "title": "Select Form",
+    "header": {
+      "format": "{0,-10} {1,-54} {2,-4} {3,-4}",
+      "data": [
+        "Name",
+        "Description",
+        "Type",
+        "System"
+      ]
+    },
+    "body": {
+      "format": "{0,-10} {1,-54} {2,-4} {3,-4}",
+      "data": []
+    },
+    "statusBar": {
+      "items": []
+    }
+  }

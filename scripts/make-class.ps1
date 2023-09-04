@@ -1,10 +1,10 @@
-function make-class {
+function makeClass {
   param(
     [string] $name,
     $demo
   )
   $s = ""
-  foreach ($c in $d.controls.getenumerator()) {
+  foreach ($c in $demo.controls.getenumerator()) {
     $s += "# $($c.value.type) $($c.key), $($c.value.title)`n"
   }
   $s += "
