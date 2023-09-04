@@ -9,14 +9,14 @@
   },
   "focus": {
     "backGround": "Black",
-    "foreGround": "White"
+    "foreGround": "BrightYellow"
   },
   "hotFocus": {
     "backGround": "Black",
-    "foreGround": "BrightYellow"
+    "foreGround": "BrightRed"
   },
   "disabled": {
     "backGround": "Black",
-    "foreGround": "Brown"
+    "foreGround": "DarkGray"
   }
 }
