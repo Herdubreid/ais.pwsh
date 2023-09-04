@@ -15,7 +15,7 @@ do {
     remove-variable form, demo -errorAction silentlycontinue
     $form = show-celin.ais.ui.gridform $select
     if ($form) {
-        $demo = new-celin.ais.ui $formsel[0].Row[0]
+        $demo = new-celin.ais.ui $form[0].row[0]
         if ($demo) {
             makeClass $form[0].row[0] $demo | out-file "$($form[0].row[0].tolower()).ps1"
         }
