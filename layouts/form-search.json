@@ -1,0 +1,40 @@
+{
+    "title": "Form Search",
+    "panes": [
+      {
+        "top": 6,
+        "left": "30%",
+        "length": 12,
+        "margin": 1,
+        "fields": [
+          {
+            "id": 1,
+            "type": "text",
+            "size": 10,
+            "text": "Form Name"
+          },
+          {
+            "id": 2,
+            "type": "text",
+            "size": 10,
+            "text": "Description"
+          },
+          {
+            "id": 3,
+            "type": "text",
+            "size": 2,
+            "text": "Type"
+          },
+          {
+            "id": 4,
+            "type": "text",
+            "size": 2,
+            "text": "System"
+          }
+        ]
+      }
+    ],
+    "statusBar": {
+      "items": []
+    }
+  }
