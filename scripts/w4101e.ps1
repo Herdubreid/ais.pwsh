@@ -21,7 +21,8 @@
 # Row 124, Product Mix
 # Row 130, Regional Info
 
-class w4101e : jdeGridForm { 
+class w4101e : jdeGridForm {
+    static [string] $ctrls = "1[123,9,82,113,114]" 
     w4101e($rs) : base($rs) {}
     [void] select([int]$row) {
         $rs = step.celin.ais.script "select(1.$row) do(4)"
@@ -33,9 +34,8 @@ class w4101e : jdeGridForm {
                 "any($(qop "1[9]" "?" $_) $(qop "1[82]" "?" $_))"
             }) -join ' '
   
-        $rs = open-celin.ais.script "w4101e" -query $q -returnControlIDs $($global:ctrlIDs["w4101e"])
+        $rs = open-celin.ais.script "w4101e" -query $q -returnControlIDs [w4101e]::$ctrls
         [jdeForm]::update($rs)
     }
 }
-$global:ctrlIDs["w4101e"] = "1[123,9,82,113,114]"
 [jdeForm]::types.add(@{ Name = "*W4101E*"; Type = [w4101e] })
