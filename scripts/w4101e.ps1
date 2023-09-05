@@ -34,7 +34,7 @@ class w4101e : jdeGridForm {
                 "any($(qop "1[9]" "?" $_) $(qop "1[82]" "?" $_))"
             }) -join ' '
   
-        $rs = open-celin.ais.script "w4101e" -query $q -returnControlIDs [w4101e]::ctrls
+        $rs = open-celin.ais.script "w4101e" -query $q -returnControlIDs ([w4101e]::ctrls)
         [jdeForm]::update($rs)
     }
 }
