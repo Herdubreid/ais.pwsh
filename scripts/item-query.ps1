@@ -1,6 +1,6 @@
 # Init
 {
-    . getScript qop, jde-form, jde-grid-form, w4101e
+    . getScript qop,jde-form,jde-grid-form,w4101e
     
     set-celin.ais.ui main (getLayout dark)
     $search = convertFrom-celin.ais.ui.form (getLayout item-search)
