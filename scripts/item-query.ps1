@@ -1,9 +1,9 @@
 # Init
-. get-script qop
+. getScript qop
     
-set-celin.ais.ui main (get-layout dark)
-$search = convertFrom-celin.ais.ui.form (get-layout item-search)
-$select = convertfrom-celin.ais.ui.gridform (get-layout item-select)
+set-celin.ais.ui main (getLayout dark)
+$search = convertFrom-celin.ais.ui.form (getLayout item-search)
+$select = convertfrom-celin.ais.ui.gridform (getLayout item-select)
 
 $flt = show-celin.ais.ui.form $search
 $q = "all($(qop "1[123]" "?" $flt[0].value.toupper())) "

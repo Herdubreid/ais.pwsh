@@ -14,7 +14,7 @@ $select.body.data = $rs.data.grid.detail
 remove-variable form, demo -errorAction silentlycontinue
 $form = show-celin.ais.ui.gridform $select
 if ($form) {
-    $demo = new-celin.ais.ui $form[0].row[0]
+    $demo = get-celin.ais.ui $form[0].row[0]
     if ($demo) {
         makeClass $form[0].row[0] $demo | out-file "$($form[0].row[0].tolower()).ps1"
     }
