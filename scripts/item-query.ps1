@@ -1,24 +1,17 @@
 # Init
-. getScript qop
+. getScript jde-form,jde-grid-form,qop
     
 set-celin.ais.ui main (getLayout dark)
 $search = convertFrom-celin.ais.ui.form (getLayout item-search)
 $select = convertfrom-celin.ais.ui.gridform (getLayout item-select)
 
-$flt = show-celin.ais.ui.form $search
-$q = "all($(qop "1[123]" "?" $flt[0].value.toupper())) "
-$q += ($flt[1].value.split(' ') | foreach-object {
-     "any($(qop "1[9]" "?" $_) $(qop "1[82]" "?" $_))"
-    }) -join ' '
-
-$rs = submit-celin.ais.query $s
-$select.body.data = $rs.data.grid.detail
-    
-remove-variable form, demo -errorAction silentlycontinue
-$form = show-celin.ais.ui.gridform $select
-if ($form) {
-    $demo = new-celin.ais.ui $form[0].row[0]
-    if ($demo) {
-        makeClass $form[0].row[0] $demo | out-file "$($form[0].row[0].tolower()).ps1"
+do {
+    remove-variable flt,item -errorAction silentlycontinue
+    $flt = show-celin.ais.ui.form $search
+    if ($flt) {
+        [w4101e]::open($flt)        
+        $select.body.data = $jde.grid.detail
+        $item = show-celin.ais.ui.gridform $select
+        $jde.exit()
     }
-}
+} until (-not $item)
