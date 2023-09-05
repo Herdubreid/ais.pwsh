@@ -1,0 +1,23 @@
+{
+    "Header": {
+        "Format": "{0,-15} {1}",
+        "Data": [
+            "Item",
+            "Description"
+        ]
+    },
+    "Body": {
+        "Format": "{0,-15} {1,-30} {2,-30} {3} {4}",
+        "Data": []
+    },
+    "StatusBar": {
+        "Items": [
+            {
+                "key": "S",
+                "label": "Search"
+            }
+        ]
+    },
+    "Title": "Select Item",
+    "BorderStyle": 0
+}
