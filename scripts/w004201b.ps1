@@ -1,4 +1,5 @@
 class w004201b : jdeGridForm {
+  static [string] $ctrls = ""
   [void] ok() {
     $r = step-celin.ais.script "do(12)"
     [jdeForm]::update($r)
@@ -9,7 +10,5 @@ class w004201b : jdeGridForm {
   }
   w004201b($rs) : base($rs) {}
 }
-# Add the returnControlIDs
-$ctrlIDs["w004201b"] = ""
 # Add the type
 [jdeForm]::types.add(@{ Name = "*W004201B*"; Type = [w004201b] })

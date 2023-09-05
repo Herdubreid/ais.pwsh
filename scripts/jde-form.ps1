@@ -1,5 +1,3 @@
-# Declare the ctrlIDs hashtable
-$global:ctrlIDs = @{}
 # The base form class
 class jdeForm {
   $rs
