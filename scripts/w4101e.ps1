@@ -37,6 +37,5 @@ class w4101e : jdeGridForm {
         [jdeForm]::update($rs)
     }
 }
-$ctrlIDs["w4101e"] = "1[123,9,82,113,114]"
+$global:ctrlIDs["w4101e"] = "1[123,9,82,113,114]"
 [jdeForm]::types.add(@{ Name = "*W4101E*"; Type = [w4101e] })
-  
