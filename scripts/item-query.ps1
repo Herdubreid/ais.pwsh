@@ -22,7 +22,7 @@ function go {
         } until ($item.key -ne "S")
     }
     catch {
-        write-host $_
+        write-host $_ -ForegroundColor Red
     }
     return $item
 }
