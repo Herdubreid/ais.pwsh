@@ -20,7 +20,7 @@ function go {
         if ($form) {
             $demo = get-celin.ais.ui $form[0].row[0]
             if ($demo) {
-                makeClass $form[0].row[0] $demo | out-file "$($form[0].row[0].tolower()).ps1"
+                return makeClass $form[0].row[0] $demo
             }
         }
     }
