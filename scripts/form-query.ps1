@@ -18,7 +18,7 @@ function go {
         remove-variable form, demo -errorAction silentlycontinue
         $form = show-celin.ais.ui.gridform $select
         if ($form) {
-            $demo = get-celin.ais.ui $form[0].row[0]
+            $demo = get-celin.ais.ui $form.value[0].row[0]
             if ($demo) {
                 return makeClass $form[0].row[0] $demo
             }
