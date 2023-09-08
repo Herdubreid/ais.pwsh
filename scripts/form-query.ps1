@@ -7,7 +7,7 @@ $select = convertfrom-celin.ais.ui.gridform (getLayout form-select)
 
 function go {
     $flt = show-celin.ais.ui.form $search
-    $s = "f9865 (fmnm,md,fmpt,sy) all($(qop "fmnm" "^" $flt[0].value.toupper()) $(qop "md" "?" $flt[1].value) $(qop "fmpt" "=" $flt[2].value.toupper()) $(qop "sy" "^" $flt[3].value)".trim() + ")"
+    $s = "f9865 (fmnm,md,fmpt,sy) all($(qop "fmnm" "^" $flt.data[0].value.toupper()) $(qop "md" "?" $flt.data[1].value) $(qop "fmpt" "=" $flt.data[2].value.toupper()) $(qop "sy" "^" $flt.data[3].value)".trim() + ")"
     
     $rs = submit-celin.ais.query $s
     $select.body.data = $rs.data.grid.detail
