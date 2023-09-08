@@ -20,7 +20,7 @@ function go {
         if ($form) {
             $demo = get-celin.ais.ui $form.value[0].row[0]
             if ($demo) {
-                return makeClass $form[0].row[0] $demo
+                return makeClass $form.value[0].row[0] $demo
             }
         }
     }
