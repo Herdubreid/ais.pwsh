@@ -37,7 +37,7 @@ class jdeForm {
   }
   # Create set string
   [string] set($fm) {
-    $a = $fm | foreach-object { "set($($_.id), $(toValue($_.value)))" }
+    $a = $fm | foreach-object { "set($($_.id), $($this.toValue($_.value)))" }
     return $a -join " "
   }
   jdeForm($rs) {
