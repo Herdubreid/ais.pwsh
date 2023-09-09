@@ -25,7 +25,7 @@ function go {
     
     if ($sel) {
       $pb.title = "Select WO..."
-      show-celin.ais.ui.progressbar { $jde.select($sel[0].index) } $pb
+      show-celin.ais.ui.progressbar { $jde.select($sel.data[0].index) } $pb
       
       if ($jde.error) {
         $errorMsg.message.text = $jde.rs.error
