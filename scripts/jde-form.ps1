@@ -28,6 +28,9 @@ class jdeForm {
   }
   # Format the value
   [string] toValue($value) {
+    if (-not $value) {
+      return " "
+    }
     $to = switch ($value.gettype()) {
       { $_ -eq [String] } { `"$value`" }
       { $_ -eq [DateOnly] } { "`"" + $($value.tostring($global:datefmt)) + "`"" }
