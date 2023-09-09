@@ -1,5 +1,5 @@
 # Init
-$datefmt = "MM/dd/YYYY"
+$datefmt = "MM/dd/yyyy"
 . getScript jde-form, jde-grid-form, w17714a, w48201f, w004201b
 
 set-celin.ais.ui main (getLayout green)
@@ -13,6 +13,7 @@ $w17714a = convertFrom-celin.ais.ui.form (getLayout w17714a)
 # WO Entry Routine
 $pb.title = "Fetching WO's..."
 show-celin.ais.ui.progressbar { [w48201f]::open() } $pb
+$w48201f.body.data = $jde.grid.detail
 
 # Call
 function go {
@@ -20,7 +21,6 @@ function go {
 
     remove-variable sel, rec, opt -errorAction silentlycontinue
     
-    $w48201f.body.data = $jde.grid.detail
     $sel = show-celin.ais.ui.gridform $w48201f
     
     if ($sel) {
@@ -47,16 +47,18 @@ function go {
         else {
           $pb.title = "Saving Changes..."
           show-celin.ais.ui.progressbar {
-            $jde.ok($fm)
+            $jde.ok($fm.data)
           } $pb
-          if ($jde -is [w004201b]) {
-            $jde.cancel()
-          }
           if ($jde.error) {
-            $errorMsg.child.message.text = $jde.rs.error
+            $errorMsg.message.text = $jde.rs.error
             show-celin.ais.ui.prompt $errorMsg
-            $pb.text = "Error..."
+            $pb.title = "Error..."
             show-celin.ais.ui.progressbar { $jde.cancel() } $pb          
+          }
+          else {
+            if ($jde -isnot [w48201f]) {
+              $jde.cancel()
+            }
           }
         }
       }
