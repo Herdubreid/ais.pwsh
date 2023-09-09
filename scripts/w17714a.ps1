@@ -1,5 +1,5 @@
 class w17714a : jdeForm {
-  static [string] $ctrls = "16|152|299|481|206|173|508|510|208|210"
+  static [string] $ctrls = "16|76|72|74|80|152|299|481|206|173|508|510|208|210"
   [void] ok($fm) {
     $s = $this.set($fm)
     $r = step-celin.ais.script "$s do(11)"

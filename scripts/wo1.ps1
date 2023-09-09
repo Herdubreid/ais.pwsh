@@ -7,6 +7,8 @@ $errorMsg = convertFrom-celin.ais.ui.prompt (get-layout error-msg)
 $w48201f = convertFrom-celin.ais.ui.gridform (get-layout w48201f)
 $w17714a = convertFrom-celin.ais.ui.form (get-layout w17714a)
 
+$datefmt = "MM/dd/YYYY"
+
 # WO Entry Routine
 $pb.text = "Fetching WO's..."
 show-celin.ais.ui.progressbar { [w48201f]::open() } $pb

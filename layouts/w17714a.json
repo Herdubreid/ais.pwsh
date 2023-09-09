@@ -9,14 +9,12 @@
       "fields": [
         {
           "id": 16,
-          "type": "number",
-          "size": 8,
+          "type": "number(8)",
           "readonly": true
         },
         {
           "id": 152,
-          "type": "text",
-          "size": 30,
+          "type": "text(30)",
           "readonly": true
         }
       ]
@@ -30,56 +28,86 @@
       "fields": [
         {
           "id": 299,
-          "type": "number",
-          "size": 4,
-          "readonly": true
+          "type": "number(4)",
+          "readonly": true,
+          "Text": "Hours - Estimated"
         },
         {
           "id": 481,
-          "type": "number",
-          "size": 4,
-          "readonly": true
+          "type": "number(4)",
+          "readonly": true,
+          "Text": "Estimated Downtime Hours"
         },
         {
           "id": 206,
-          "type": "decimal",
-          "size": 12,
-          "readonly": true
+          "type": "decimal(12,0)",
+          "readonly": true,
+          "Text": "Amount - Estimated"
         },
         {
           "id": 173,
-          "type": "decimal",
-          "size": 12,
-          "readonly": true
+          "type": "decimal(12,0)",
+          "readonly": true,
+          "Text": "Amount - Estimated Material"
         }
       ]
     },
     {
       "top": 4,
-      "left": "50%",
+      "left": 60,
       "margin": 1,
       "length": 30,
       "alignment": "right",
       "fields": [
         {
           "id": 508,
-          "type": "Number",
-          "size": 4
+          "type": "Number(4)",
+          "Text": "Hours - Actual"
         },
         {
           "id": 510,
-          "type": "Number",
-          "size": 4
+          "type": "Number(4)",
+          "Text": "Actual Downtime Hours"
         },
         {
           "id": 208,
-          "type": "Decimal",
-          "size": 12
+          "type": "Decimal(12,0)",
+          "Text": "Amount - Actual Labor"
         },
         {
           "id": 210,
-          "type": "Decimal",
-          "size": 12
+          "type": "Decimal(12)",
+          "Type": "Number(6)",
+          "Text": "Amount - Actual Material"
+        }
+      ]
+    },
+    {
+      "top": 4,
+      "left": 90,
+      "margin": 1,
+      "length": 30,
+      "alignment": "right",
+      "fields": [
+        {
+          "Id": 72,
+          "Type": "Date()",
+          "Text": "Date - Start"
+        },
+        {
+          "Id": 74,
+          "Type": "Date()",
+          "Text": "Date - Requested"
+        },
+        {
+          "Id": 76,
+          "Type": "Date()",
+          "Text": "Date - W.O. Planned Completed"
+        },
+        {
+          "Id": 80,
+          "Type": "Date(6)",
+          "Text": "Date - Completion (Julian)"
         }
       ]
     }

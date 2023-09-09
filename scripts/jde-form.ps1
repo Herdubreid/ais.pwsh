@@ -27,9 +27,18 @@ class jdeForm {
       }        
     }
   }
+  # Format the value
+  [string] toValue($value) {
+    $to = switch ($value.gettype()) {
+      { $_ -eq [String] } { `"$value`" }
+      { $_ -eq [DateOnly] } { "`"" + $($value.tostring($datefmt)) + "`"" }
+      default { $value }
+    }
+    return $to
+  }
   # Create set string
   [string] set($fm) {
-    $a = $fm | foreach-object { "set($($_.id), $($_.value))" }
+    $a = $fm | foreach-object { "set($($_.id), $(toValue($_.value)))" }
     return $a -join " "
   }
   jdeForm($rs) {
