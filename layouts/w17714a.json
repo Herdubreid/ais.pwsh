@@ -40,13 +40,13 @@
         },
         {
           "id": 206,
-          "type": "decimal(12,2)",
+          "type": "decimal(9,2)",
           "readonly": true,
           "Text": "Amount - Estimated"
         },
         {
           "id": 173,
-          "type": "decimal(12,2)",
+          "type": "decimal(9,2)",
           "readonly": true,
           "Text": "Amount - Estimated Material"
         }
@@ -54,7 +54,7 @@
     },
     {
       "top": 4,
-      "left": 60,
+      "left": "50%",
       "margin": 1,
       "length": 30,
       "alignment": "right",
@@ -71,20 +71,19 @@
         },
         {
           "id": 208,
-          "type": "Decimal(12,2)",
+          "type": "Decimal(9,2)",
           "Text": "Amount - Actual Labor"
         },
         {
           "id": 210,
-          "type": "Decimal(12,2)",
-          "Type": "Number(6)",
+          "type": "Decimal(9,2)",
           "Text": "Amount - Actual Material"
         }
       ]
     },
     {
-      "top": 4,
-      "left": 90,
+      "top": 14,
+      "left": "50%",
       "margin": 1,
       "length": 30,
       "alignment": "right",

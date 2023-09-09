@@ -21,7 +21,6 @@ class jdeForm {
       foreach ($item in $pane.fields) {
         $fld = $this.rs.data.form | Where-Object Id -eq $item.Id
         if ($null -ne $fld) {
-          $item.text = $fld.title
           $item.value = $fld.value
         }
       }        
