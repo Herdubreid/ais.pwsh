@@ -31,7 +31,7 @@ class jdeForm {
   [string] toValue($value) {
     $to = switch ($value.gettype()) {
       { $_ -eq [String] } { `"$value`" }
-      { $_ -eq [DateOnly] } { "`"" + $($value.tostring($datefmt)) + "`"" }
+      { $_ -eq [DateOnly] } { "`"" + $($value.tostring($global:datefmt)) + "`"" }
       default { $value }
     }
     return $to

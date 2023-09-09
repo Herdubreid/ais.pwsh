@@ -1,5 +1,6 @@
 {
   "title": "Work Order List",
+  "color": "high",
   "header": {
     "format": "{0,8} {1,-30} {2,-30} {3, -30} {4, -38} {5}",
     "data": [
