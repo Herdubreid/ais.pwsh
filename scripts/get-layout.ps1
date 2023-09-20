@@ -4,4 +4,3 @@ function getLayout {
   $rq = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/layouts/${name}.json"
   return $rq.content
 }
-  
