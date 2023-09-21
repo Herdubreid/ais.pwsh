@@ -16,4 +16,4 @@ class w48201f : jdeGridForm {
   w48201f($rs) : base($rs) {}
 }
 # Add the type
-[jdeForm]::types.add(@{ Name = "*W48201F*"; Type = [w48201f] })
+[jdeForm]::addType(@{ Name = "*W48201F*"; Type = [w48201f] })

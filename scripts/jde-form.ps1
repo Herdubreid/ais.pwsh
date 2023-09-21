@@ -3,6 +3,11 @@ class jdeForm {
   $rs
   # Type Array
   static $types = (new-object System.Collections.ArrayList)
+  static [void] addType($t) {
+    if (-not ([jdeForm]::types | Where-Object { $_.Name -eq $t.Name })) {
+      [jdeForm]::types.add($t)
+    }
+  }
   # Close the session
   [void] exit() {
     $r = close-celin.ais.script

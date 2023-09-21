@@ -1,0 +1,26 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Celin.AIS.Pwsh.ServerSave</T>
+      <T>System.Object</T>
+    </TN>
+    <ToString>ServerSave { BaseUrl = https://demo.steltix.com, Credential = System.Management.Automation.PSCredential, CookieContainer = {"Capacity":300,"Count":1,"MaxCookieSize":4096,"PerDomainCapacity":20}, AuthResponse = {"username":"DEMO","environment":"JDV920","role":"*ALL","jasserver":"http://e1webdv1:7020","userInfo":{"token":"044jK7tchVACxsUb5Pll5kVF50KFsTYWuEBS65ZQ9B6wfw=MDE5MDA1OTE3MzA2MDkwNDc2NjE0ODkwOWNlbGluMTY5NTMwNzk1MTEzNA==","langPref":"  ","locale":"en","dateFormat":"MDE","dateSeperator":"/","simpleDateFormat":"MM/dd/yyyy","decimalFormat":".","addressNumber":4242,"alphaName":"DEMO","appsRelease":"E920","country":" "},"userAuthorized":false,"version":null,"aisSessionCookie":"PFy4Omwfl2sYWxQ_x005F_x8MdcVM4f3wUqJL-e7LiHeZAl1GhPPXEkDIh!739414336!1695307951135","adminAuthorized":true,"message":null,"exception":null,"timeStamp":null}, FormResponse = {"stackId":0,"stateId":0,"rid":"","currentApp":"P4312_W4312A_ZJDE0006","sysErrors":[],"links":null,"message":null,"exception":null,"timeStamp":"2023-09-21:16.55.47"} }</ToString>
+    <Props>
+      <S N="BaseUrl">https://demo.steltix.com</S>
+      <Obj N="Credential" RefId="1">
+        <TN RefId="1">
+          <T>System.Management.Automation.PSCredential</T>
+          <T>System.Object</T>
+        </TN>
+        <ToString>System.Management.Automation.PSCredential</ToString>
+        <Props>
+          <S N="UserName">demo</S>
+          <SS N="Password">640065006d006f00</SS>
+        </Props>
+      </Obj>
+      <S N="CookieContainer">{"Capacity":300,"Count":1,"MaxCookieSize":4096,"PerDomainCapacity":20}</S>
+      <S N="AuthResponse">{"username":"DEMO","environment":"JDV920","role":"*ALL","jasserver":"http://e1webdv1:7020","userInfo":{"token":"044jK7tchVACxsUb5Pll5kVF50KFsTYWuEBS65ZQ9B6wfw=MDE5MDA1OTE3MzA2MDkwNDc2NjE0ODkwOWNlbGluMTY5NTMwNzk1MTEzNA==","langPref":"  ","locale":"en","dateFormat":"MDE","dateSeperator":"/","simpleDateFormat":"MM/dd/yyyy","decimalFormat":".","addressNumber":4242,"alphaName":"DEMO","appsRelease":"E920","country":" "},"userAuthorized":false,"version":null,"aisSessionCookie":"PFy4Omwfl2sYWxQ_x005F_x8MdcVM4f3wUqJL-e7LiHeZAl1GhPPXEkDIh!739414336!1695307951135","adminAuthorized":true,"message":null,"exception":null,"timeStamp":null}</S>
+      <S N="FormResponse">{"stackId":0,"stateId":0,"rid":"","currentApp":"P4312_W4312A_ZJDE0006","sysErrors":[],"links":null,"message":null,"exception":null,"timeStamp":"2023-09-21:16.55.47"}</S>
+    </Props>
+  </Obj>
+</Objs>

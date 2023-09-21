@@ -1,5 +1,7 @@
 # Init
-. getScript jde-form, jde-grid-form, w4312f, w4312a
+$hint = "PO Receipting routine (use 'go' to start)"
+
+. getScript jde-form, jde-grid-form, w4312a, w4312f
 
 set-celin.ais.ui main (getLayout green)
 set-celin.ais.ui high (getLayout green-high)

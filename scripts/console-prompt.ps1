@@ -10,7 +10,7 @@ function prompt {
     $top = [Console]::CursorTop
     if ($top -eq 0) {
         # If in the first line, write header
-        $h = "No Host`n"
+        $title = "No Host`n"
         if ($env:CELIN_DEFAULT_AIS) {
             # Get the current variable
             $var = get-variable $env:CELIN_DEFAULT_AIS
@@ -24,10 +24,13 @@ function prompt {
             # Build the header string
             $sp = [Console]::BufferWidth - $center.Length;
             [int]$rpad = $sp / 2        
-            $h = $var.Name.PadRight($sp - $rpad) `
+            $title = $var.Name.PadRight($sp - $rpad) `
                 + $center `
                 + $right.PadLeft($rpad) + "`n"
         }
+        if ($hint) {
+            $title2 = $hint + "`n"
+        }
     }
-    return "$h$(Split-Path -Path (Get-Location) -Leaf) : "
+    return "$title$title2$(Split-Path -Path (Get-Location) -Leaf) : "
 }
