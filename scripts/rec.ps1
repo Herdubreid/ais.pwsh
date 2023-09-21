@@ -30,7 +30,7 @@ function go {
         show-celin.ais.ui.progressbar { $jde.select($sel.data[0].index) } $pb
         
         if ($jde.error) {
-          $errorMsg.child.message.title = $jde.rs.error
+          $errorMsg.message.text = $jde.rs.error
           $opt = show-celin.ais.ui.prompt $errorMsg
         }
         
@@ -53,7 +53,7 @@ function go {
               $jde.ok()
             } $pb
             if ($jde.error) {
-              $errorMsg.message.title = $jde.rs.error
+              $errorMsg.message.text = $jde.rs.error
               show-celin.ais.ui.prompt $errorMsg
               $pb.title = "Receipting Failed..."
               show-celin.ais.ui.progressbar { $jde.cancel() } $pb          
