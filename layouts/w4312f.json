@@ -1,5 +1,6 @@
 {
   "title": "Open PO's",
+  "color": "high",
   "header": {
     "format": "{0,12} {1,-43} {2,-10}",
     "data": [

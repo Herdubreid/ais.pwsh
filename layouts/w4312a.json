@@ -1,5 +1,6 @@
 {
   "title": "Receipt Lines",
+  "color": "high",
   "header": {
     "format": "{0,12} {1,12} {2,-43} {3,4}",
     "data": [
