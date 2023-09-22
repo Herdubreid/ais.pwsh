@@ -6,7 +6,7 @@ $hint = "PO Receipting routine (enter 'go' to start, 'q' to quit)"
 set-celin.ais.ui main (getLayout green)
 set-celin.ais.ui high (getLayout green-high)
 
-$pb = SconvertFrom-celin.ais.ui.progressbar (getLayout pb)
+$pb = convertFrom-celin.ais.ui.progressbar (getLayout pb)
 $errorMsg = convertFrom-celin.ais.ui.prompt (getLayout error-msg)
 $w4312f = convertFrom-celin.ais.ui.gridform (getLayout w4312f)
 $w4312a = convertFrom-celin.ais.ui.gridform (getLayout w4312a)
