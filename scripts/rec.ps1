@@ -75,4 +75,5 @@ function q {
   Remove-Item function:\go
   global:$hint = $null
   $jde.exit()
+  clear
 }
