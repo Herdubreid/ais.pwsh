@@ -1,5 +1,5 @@
 # Init
-$hint = "PO Receipting routine (use 'go' to start)"
+$hint = "PO Receipting routine (enter 'go' to start, 'q' to quit)"
 
 . getScript jde-form, jde-grid-form, w4312f
 
@@ -69,4 +69,9 @@ function go {
   } catch {
     write-host $_ -ForegroundColor Red   
   }
+}
+
+function q {
+  Remove-Item function:\go
+  $jde.exit()
 }
