@@ -1,5 +1,5 @@
 # Init
-$hint = "PO Receipting routine (enter 'go' to start, 'q' to quit)"
+global:$hint = "PO Receipting routine (enter 'go' to start, 'q' to quit)"
 
 . getScript jde-form, jde-grid-form, w4312f
 
@@ -73,5 +73,6 @@ function go {
 
 function q {
   Remove-Item function:\go
+  global:$hint = $null
   $jde.exit()
 }
