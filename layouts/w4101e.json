@@ -1,0 +1,23 @@
+{
+  "Panes": [
+    {
+      "Margin": 1,
+      "Length": "15",
+      "Fields": [
+        {
+          "Id": 13,
+          "Type": "Text(6)",
+          "Text": "2nd Item Number"
+        },
+        {
+          "Id": 23,
+          "Type": "Text(6)",
+          "Text": "Description"
+        }
+      ],
+      "Top": "1",
+      "Left": "10"
+    }
+  ],
+  "Title": "Item Master Revisions"
+}

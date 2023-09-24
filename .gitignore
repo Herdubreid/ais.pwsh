@@ -1,2 +1,2 @@
-.xml
-/tmp
+*.xml
+tmp/

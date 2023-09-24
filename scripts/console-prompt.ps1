@@ -14,22 +14,25 @@ function prompt {
         if ($env:CELIN_DEFAULT_AIS) {
             # Get the current variable
             $var = get-variable $env:CELIN_DEFAULT_AIS
-            $center = "Not Connected"
-            $right = ""
-            if ($var.Value.AuthResponse) {
-                # If get the environment and user
-                $center = $var.Value.AuthResponse.environment
-                $right = $var.Value.AuthResponse.username
-            }
-            # Build the header string
-            $sp = [Console]::BufferWidth - $center.Length;
-            [int]$rpad = $sp / 2        
-            $title = $var.Name.PadRight($sp - $rpad) `
+            if ($var) {
+
+                $center = "Not Connected"
+                $right = ""
+                if ($var.Value.AuthResponse) {
+                    # If get the environment and user
+                    $center = $var.Value.AuthResponse.environment
+                    $right = $var.Value.AuthResponse.username
+                }
+                # Build the header string
+                $sp = [Console]::BufferWidth - $center.Length;
+                [int]$rpad = $sp / 2        
+                $title = $var.Name.PadRight($sp - $rpad) `
                 + $center `
                 + $right.PadLeft($rpad) + "`n"
-        }
-        if ($hint) {
-            $title2 = $hint + "`n"
+            }
+            if ($hint) {
+                $title2 = $hint + "`n"
+            }
         }
     }
     return "$title$title2$(Split-Path -Path (Get-Location) -Leaf) : "

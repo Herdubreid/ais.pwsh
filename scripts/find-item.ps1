@@ -4,6 +4,7 @@ $global:hint = "Item Search & Select (enter 'find' followed by search paramters)
 . getScript qop
 $select = convertfrom-celin.ais.ui.gridform (getLayout item-select)
 $select.many = $true
+$select.title = "Select Items"
 
 # Find & Select
 function find {

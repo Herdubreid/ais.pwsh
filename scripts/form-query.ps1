@@ -1,4 +1,6 @@
 # Init
+$global:hint = "Form Query (enter 'go' to start, 'q' to quit)"
+
 . getScript qop, make-class
 
 set-celin.ais.ui main (getLayout green)
@@ -20,7 +22,7 @@ function go {
         if ($form) {
             $demo = get-celin.ais.ui $form.data[0].row[0]
             if ($demo) {
-                return makeClass $form.data[0].row[0].tolower() $demo
+                makeClass $form.data[0].row[0].tolower() $demo >> class.ps1
             }
         }
     }
@@ -28,3 +30,10 @@ function go {
         write-host $_ -ForegroundColor Red
     }
 }
+
+function q {
+    Remove-Item function:\go
+    $global:hint = $null
+    Clear-Host
+}
+  

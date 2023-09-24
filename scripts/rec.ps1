@@ -1,7 +1,7 @@
 # Init
 $global:hint = "PO Receipting routine (enter 'go' to start, 'q' to quit)"
 
-. getScript jde-form, jde-grid-form, w4312f
+. getScript jde-base, w4312f
 
 set-celin.ais.ui main (getLayout green)
 set-celin.ais.ui high (getLayout green-high)
@@ -75,5 +75,5 @@ function q {
   Remove-Item function:\go
   $global:hint = $null
   $jde.exit()
-  clear
+  Clear-Host
 }
