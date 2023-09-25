@@ -1,9 +1,9 @@
 function init {
     $global:hint = "Item Maintenance (enter go start, q to quit)"
-    $global:path = "tmp/im"
+    $global:mod = "im/"
 
     foreach ($m in @("master")) {
-        Invoke-WebRequest -Uri "$source/$path/$m.psm1"
+        Invoke-WebRequest -Uri "$source/$mod$m.psm1" -OutFile "/$tmp$m.psm1"
     }
 
     Clear-Host

@@ -17,9 +17,10 @@ function use {
   )
 
   $Global:source = "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/scripts";
+  $global:tmp = "tmp/"
 
   try {
-    $path = "./tmp/${name}"
+    $path = "./$tmp${name}"
     if (-not (Test-Path $path)) {
       New-Item $path -ItemType Directory
       Invoke-WebRequest -Uri "$source/$name/default.psm1" -OutFile "$path/default.psm1"
