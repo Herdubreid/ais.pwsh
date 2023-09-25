@@ -3,7 +3,7 @@ function init {
     $global:mod = "im/"
 
     foreach ($m in @("master")) {
-        Invoke-WebRequest -Uri "$source/$mod$m.psm1" -OutFile "/$tmp$m.psm1"
+        Invoke-WebRequest -Uri "$source/$mod$m.psm1" -OutFile "./$tmp$m.psm1"
     }
 
     Clear-Host
