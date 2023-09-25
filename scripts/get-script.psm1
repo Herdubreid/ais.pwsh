@@ -7,7 +7,7 @@ function getScript {
     remove-item function:\init -ErrorAction SilentlyContinue
     remove-item function:\go -ErrorAction SilentlyContinue
     remove-item function:\q -ErrorAction SilentlyContinue
-    Import-Module ./$tmp$n.psm1 -Force
+    Import-Module ./$tmp$n.psm1 -Force -Global
     init
   }
 }

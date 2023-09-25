@@ -20,20 +20,40 @@ function use {
   $global:tmp = "tmp/"
 
   try {
-    $path = "./$tmp$name"
-    if (-not (Test-Path $path)) {
-      New-Item $path -ItemType Directory
-      Invoke-WebRequest -Uri "$source/$name/default.psm1" -OutFile "$path/default.psm1"
-    }
-    
+    $ProgressPreference = 'SilentlyContinue' # Subsequent calls do not display UI.
     remove-item function:\init -ErrorAction SilentlyContinue
     remove-item function:\go -ErrorAction SilentlyContinue
-    remove-item function:\q -ErrorAction SilentlyContinue
-    Import-Module "$path/default.psm1" -Force -Global
+
+    $from = "$source/$mod$name"
+    $to = "./$tmp$mod$name"
+    if (-not $mod) {
+      if (-not (Test-Path $to)) {
+        New-Item $to -ItemType Directory | Out-Null
+      }
+      $from += "/default"
+      $to += "/default"
+    }
+    $to += ".psm1"
+    $from += ".psm1"
+
+    if (-not (Test-Path $to)) {
+      Invoke-WebRequest -Uri $from -OutFile $to
+    }
+    
+    Import-Module $to -Force -Global
     
     init
   } catch {
-    Write-Host $_
     Write-Host "'$name' not available"
+  } finally {
+    $ProgressPreference = 'Continue' # Subsequent calls do display UI.
   }
+}
+
+function q {
+  remove-item function:\init -ErrorAction SilentlyContinue
+  remove-item function:\go -ErrorAction SilentlyContinue
+  $Global:hint = $null
+  $Global:mod = $null
+  Clear-Host
 }

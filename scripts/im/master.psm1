@@ -7,9 +7,22 @@ function init {
 function go {
     param (
         [string] $cmd        
-    )    
-}
+    )
 
-function q {
-    getScript im
+    $options = @("add", "edit", "back")
+
+    switch ($cmd.ToLower()) {
+        options[0] {
+
+        }
+        options[1] {}
+        options[2] {
+            $Global:mod = $null
+            use im
+        }
+        Default {
+            Write-Host "Optins:"
+            Write-Host $options
+        }
+    }
 }
