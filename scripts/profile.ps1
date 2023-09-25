@@ -615,12 +615,18 @@ Set-PSReadLineKeyHandler -Chord 'Alt+x' `
 function getScript {
     param([string[]] $names)
     foreach ($n in $names) {
-        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/scripts/${n}.ps1" | Invoke-Expression
+        if (-not (Test-Path "./tmp/${n}.ps1")) {
+            Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/scripts/${n}.ps1" -OutFile "./tmp/${n}.ps1"
+        }
+        . ./tmp/${n}.ps1
     }
 }
 # Get Layout
 function getLayout {
     param([string] $name)
-    $rq = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/layouts/${name}.json"
-    return $rq.content
+    $fn = "./tmp/${name}.json"
+    if (-not (Test-Path $fn)) {
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/layouts/${name}.json" -OutFile $fn
+    }
+    return Get-Content $fn -Raw
 }
