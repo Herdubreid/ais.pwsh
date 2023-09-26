@@ -7,10 +7,16 @@ function init {
 
 function go {
     param (
-        [string] $cmd
+        [string] $cmd,
+        [Parameter(ValueFromRemainingArguments = $true)]
+        [string[]] $params
     )
-
+    
     $options = @("master", "bp")
+
+    if (-not $cmd) {
+        $cmd = Show-Menu $options
+    }
     
     switch ($cmd.ToLower()) {
         $options[0] {

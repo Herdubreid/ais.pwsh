@@ -12,8 +12,7 @@ function use {
   [CmdletBinding()]
   param (
       [Parameter(Mandatory=$true, HelpMessage="Enter action name")]
-      [string]
-      $name
+      [string] $name
   )
 
   $Global:source = "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/scripts";
