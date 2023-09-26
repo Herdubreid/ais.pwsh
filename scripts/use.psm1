@@ -12,7 +12,9 @@ function use {
   [CmdletBinding()]
   param (
       [Parameter(Mandatory=$true, HelpMessage="Enter action name")]
-      [string] $name
+      [string] $name,
+      [Parameter(ValueFromRemainingArguments = $true)]
+      [string[]] $params
   )
 
   $Global:source = "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/scripts";
@@ -41,7 +43,7 @@ function use {
     
     Import-Module $to -Force -Global
     
-    init
+    init $params
   } catch {
     Write-Host "'$name' not available"
   } finally {

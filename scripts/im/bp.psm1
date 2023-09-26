@@ -1,17 +1,22 @@
 function init {
-    $global:hint = "Item Maintenance (enter go start)"
-    $global:mod = "im/"
+    param (
+        [string] $branch
+    )
+    $global:hint = "Branch/Plant $branch Maintenance (enter go start)"
+    $global:branch = $branch
 
     Clear-Host
 }
 
 function go {
     param (
+        [string] $cmd,
         [Parameter(ValueFromRemainingArguments = $true)]
-        [string] $cmd
+        [string[]] $params
     )
     
-    $options = @("master", "bp 30", "bp m30")
+    Write-Host "Branch: $branch"
+    $options = @("list", "add", "price", "back")
 
     if (-not $cmd) {
         $cmd = Show-Menu $options
@@ -19,13 +24,17 @@ function go {
     
     switch ($cmd.ToLower()) {
         $options[0] {
-            use $options[0]
+            #use $options[0]
         }
         $options[1] {
-            use bp 30
+            #use $options[1]
         }
         $options[2] {
-            use bp M30
+
+        }
+        $options[3] {
+            $Global:mod = $null
+            use im
         }
         Default {
             Write-Host "Options:"
