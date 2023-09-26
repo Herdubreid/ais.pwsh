@@ -33,7 +33,7 @@ function go {
                     for ($i = 0; $i -lt $p.length; $i++) {
                         $s += "set($($rs.data.form[$i].Id),$($p[$i])) "
                     }
-                    $global:rs = Step-Celin.AIS.Script $s.TrimEnd()  -returnControlIDs $rc
+                    $global:rs = Step-Celin.AIS.Script "${s}do(11)"  -returnControlIDs $rc
                 }
                 catch {
                     Write-Host $_ -ForegroundColor Red
