@@ -1,16 +1,6 @@
-
 function init {
-    [CmdletBinding()]
-    param (
-        [Parameter(ValueFromRemainingArguments=$true)]
-        [string] $options
-    )
-    $Global:hint = "Item Master (enter go to start, q to quit)"
+    $Global:hint = "Item Master (enter go to start)"
     Clear-Host
-
-    if ($options) {
-        go $options
-    }
 }
 
 function go {
@@ -68,15 +58,19 @@ function go {
 
     $list = [System.Action] {
         Write-Host "Fetching Item List..."
-        $Global:rs = Submit-Celin.AIS.Query "f4101 (litm,dsc1,dsc2) by[asc(dsc2)] all(srtx=FLF)"
-        $a = $rs.data.grid.header | Select-Object -ExpandProperty Title
-        Write-Host
-        [console]::WriteLine("{0, -15} {1, -30} {2}", $a)
-        [console]::WriteLine("".PadRight(75, '-'))
-        foreach ($r in $rs.data.grid.detail) {
-            [console]::WriteLine("{0,-15} {1, -30} {2, -10}", $r.toarray())
+        try {
+            $Global:rs = Submit-Celin.AIS.Query "f4101 (litm,dsc1,dsc2) by[asc(dsc2)] all(srtx=FLF)"
+            $a = $rs.data.grid.header | Select-Object -ExpandProperty Title
+            Write-Host
+            [console]::WriteLine("{0, -15} {1, -30} {2}", $a)
+            [console]::WriteLine("".PadRight(75, '-'))
+            foreach ($r in $rs.data.grid.detail) {
+                [console]::WriteLine("{0,-15} {1, -30} {2, -10}", $r.toarray())
+            }
+            Write-Host "$($rs.data.grid.detail.count()) Item(s) returned"
+        } catch {
+            Write-Host $_ -ForegroundColor Red
         }
-        Write-Host "$($rs.data.grid.detail.count()) Item(s) returned"
     }
 
     if (-not $cmd) {
