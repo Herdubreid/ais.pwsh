@@ -13,7 +13,7 @@
     "StatusBar": {
         "Items": [
             {
-                "key": "S",
+                "key": "Alt-S",
                 "label": "Search"
             }
         ]

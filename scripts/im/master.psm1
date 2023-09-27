@@ -31,7 +31,7 @@ function go {
                     $p = @($item, $desc, $type, "FLF", "S", "IN30", "EA")
                     $s = ""
                     for ($i = 0; $i -lt $p.length; $i++) {
-                        $s += "set($($rs.data.form[$i].Id),`"$($p[$i])`") "
+                        $s += "set($($rs.data.form[$i].Id),'$($p[$i])') "
                     }
                     $global:rs = Step-Celin.AIS.Script "${s}do(11)"  -returnControlIDs $rc
                     if ($rs.error) {
