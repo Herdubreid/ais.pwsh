@@ -68,23 +68,22 @@ function go {
                 $bpState.toAdd = Show-Celin.AIS.Ui.GridForm $bpState.select
                 if ($bpState.toAdd) {
                     if ($bpState.toAdd.data.toarray().length -gt 0) {
-                        try {
-                            foreach ($item in $bpState.toAdd.data) {
+                        foreach ($item in $bpState.toAdd.data) {
+                            try {
                                 Write-Host "Adding $($item.row[0]) $($item.row[1])"
                                 $bpState.rs = open-celin.ais.script "w41026e zjde0001" "do(47)" -returnControlIDs $bpState.rc
                                 $bpState.rs = step-celin.ais.script "set(15,$branch) set(16,$($item.row[0])) set(145,3104) set(151,4242) do(11)" -returnControlIDs $bpState.rc
                                 if ($bpState.rs.error) {
                                     throw $bpState.rs.error
                                 }
+                                $success = $true
+                            }
+                            catch {
+                                Write-Host $_ -ForegroundColor Red
+                            }
+                            finally {
                                 Close-Celin.AIS.Script | Out-Null
                             }
-                                $success = $true
-                        }
-                        catch {
-                            Write-Host $_ -ForegroundColor Red
-                        }
-                        finally {
-                            Close-Celin.AIS.Script | Out-Null
                         }
                     }
                     else {
