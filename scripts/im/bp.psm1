@@ -17,7 +17,7 @@ function init {
     $bpState.select.header.format = "{0, -15} {1}"
     $bpState.select.header.data = @("Item", "Description")
 
-    $bpState.edit = ConvertFrom-Celin.AIS.Ui.Form (Get-Content ../layouts/bp-edit.json -Raw)
+    $bpState.edit = ConvertFrom-Celin.AIS.Ui.Form (getLayout bp-edit)
 
     Clear-Host
 }
@@ -128,18 +128,3 @@ function go {
         }
     }
 }
-
-<#
-$bpState.edit.title = "Add Item to $branch"
-$bpState.edit.panes[0].fields[0].value = $branch
-$bpState.rs = open-celin.ais.script "w41026e zjde0001"
-foreach ($item in $bpState.toAdd.data) {
-    $bpState.edit.panes[0].fields[1].value = $item.row[0]
-    $bpState.edit.panes[0].fields[2].value = $item.row[1]
-    Remove-Variable add -ErrorAction SilentlyContinue
-    $bpState.add = Show-Celin.AIS.Ui.Form $bpState.edit
-    $bpState.set = ($bpState.add.data | foreach-object { "set($($_.id),$($_.value))" }) -join " "
-    $bpState.rs = Step-Celin.AIS.Script "do(47)"  -returnControlIDs $bpState.rc
-    $bpState.rs = Step-Celin.AIS.Script $bpState.set -returnControlIDs $bpState.rc
-}
-#>
