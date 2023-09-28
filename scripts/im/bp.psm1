@@ -3,7 +3,21 @@ function init {
         [string] $branch
     )
     $global:hint = "Branch/Plant $branch Maintenance (enter go start)"
-    $global:branch = $branch
+    $global:bpState = @{}
+
+    $bpState.rc = "15|16|145|151"
+
+    $bpState.branch = $branch
+
+    $bpState.select = convertfrom-celin.ais.ui.gridform (getLayout base-grid)
+    $bpState.select.many = $true
+    $bpState.select.options = [char[]]@('1')
+    $bpState.select.statusbar.add("Select Items with 1")
+    $bpState.select.body.format = "{0, -15} {1, -30} {2}"
+    $bpState.select.header.format = "{0, -15} {1}"
+    $bpState.select.header.data = @("Item", "Description")
+
+    $bpState.edit = ConvertFrom-Celin.AIS.Ui.Form (Get-Content ../layouts/bp-edit.json -Raw)
 
     Clear-Host
 }
@@ -39,21 +53,50 @@ function go {
         Write-Host "Fetching Availble Items..."
         $success = $false
         try {
-            $Global:rs1 = Submit-Celin.AIS.Query "f4101 (litm,dsc1,dsc2) by[asc(dsc2)] all(srtx=FLF)"
-            $Global:rs2 = Submit-Celin.AIS.Query "v4101n (f4102.litm) all(f4101.srtx=FLF f4102.mcu=$branch)"
-            $toAdd = @()
-            foreach ($itm in $rs1.data.grid.detail) {
-                $find = $rs2.data.grid.detail | Where-Object { $_[0] -eq $itm[0] }
-                Write-Host $find
+            $bpState.master = Submit-Celin.AIS.Query "f4101 (litm,dsc1,dsc2) by[asc(dsc2)] all(srtx=FLF)"
+            $bpState.bp = Submit-Celin.AIS.Query "v4101n (f4102.litm) all(f4101.srtx=FLF f4102.mcu=$branch)"
+            $bpState.available = @()
+            foreach ($itm in $bpState.master.data.grid.detail) {
+                $find = $bpState.bp.data.grid.detail | Where-Object { $_[0] -eq $itm[0] }
                 if (-not $find) {
-                    $global:toAdd += ,$itm
+                    $bpState.available += , $itm
                 }
             }
-            if ($toAdd.Length -gt 0) {
-
+            if ($bpState.available.Length -gt 0) {
+                $bpState.select.title = "Add Items to Branch $branch"
+                $bpState.select.set($available)
+                $bpState.toAdd = Show-Celin.AIS.Ui.GridForm $bpState.select
+                if ($bpState.toAdd) {
+                    if ($bpState.toAdd.data.toarray().length -gt 0) {
+                        try {
+                            foreach ($item in $bpState.toAdd.data) {
+                                Write-Host "Adding $($item.row[0]) $($item.row[1])"
+                                $bpState.rs = open-celin.ais.script "w41026e zjde0001" "do(47)" -returnControlIDs $bpState.rc
+                                $bpState.rs = step-celin.ais.script "set(15,$branch) set(16,$($item.row[0])) set(145,3104) set(151,4242) do(11)" -returnControlIDs $bpState.rc
+                                if ($bpState.rs.error) {
+                                    throw $bpState.rs.error
+                                }
+                                Close-Celin.AIS.Script | Out-Null
+                            }
+                                $success = $true
+                        }
+                        catch {
+                            Write-Host $_ -ForegroundColor Red
+                        }
+                        finally {
+                            Close-Celin.AIS.Script | Out-Null
+                        }
+                    }
+                    else {
+                        Write-Host "No Items Selected"
+                    }
+                }
             }
-            $success = $true
-        } catch {
+            else {
+                Write-Host "No Items to Add..."
+            }
+        }
+        catch {
             Write-Host $_ -ForegroundColor Red
         }
         return $success
@@ -86,3 +129,18 @@ function go {
         }
     }
 }
+
+<#
+$bpState.edit.title = "Add Item to $branch"
+$bpState.edit.panes[0].fields[0].value = $branch
+$bpState.rs = open-celin.ais.script "w41026e zjde0001"
+foreach ($item in $bpState.toAdd.data) {
+    $bpState.edit.panes[0].fields[1].value = $item.row[0]
+    $bpState.edit.panes[0].fields[2].value = $item.row[1]
+    Remove-Variable add -ErrorAction SilentlyContinue
+    $bpState.add = Show-Celin.AIS.Ui.Form $bpState.edit
+    $bpState.set = ($bpState.add.data | foreach-object { "set($($_.id),$($_.value))" }) -join " "
+    $bpState.rs = Step-Celin.AIS.Script "do(47)"  -returnControlIDs $bpState.rc
+    $bpState.rs = Step-Celin.AIS.Script $bpState.set -returnControlIDs $bpState.rc
+}
+#>

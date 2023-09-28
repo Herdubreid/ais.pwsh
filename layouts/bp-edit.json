@@ -1,0 +1,51 @@
+{
+  "Title": "Add Item Branch",
+  "Panes": [
+    {
+      "Margin": 1,
+      "Length": 0,
+      "Top": 1,
+      "Left": 5,
+      "Horizontal": true,
+      "Fields": [
+        {
+          "Id": 15,
+          "Type": "Text(12)",
+          "ReadOnly": true
+        },
+        {
+          "Id": 16,
+          "Type": "Text(15)",
+          "ReadOnly": true
+        },
+        {
+          "Type": "Text(30)",
+          "ReadOnly": true
+        }
+      ]
+    },
+    {
+      "Margin": 1,
+      "Length": "20",
+      "Top": "10",
+      "Left": "30%",
+      "Fields": [
+        {
+          "Id": 145,
+          "Type": "Number(8)",
+          "Text": "Supplier"
+        },
+        {
+          "Id": 182,
+          "Type": "Number(3)",
+          "Text": "Shelf Life Days"
+        },
+        {
+          "Id": 188,
+          "Type": "Number(3)",
+          "Text": "Best Before Days"
+        }
+      ]
+    }
+  ]
+}
