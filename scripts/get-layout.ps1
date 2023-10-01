@@ -1,4 +1,3 @@
-
 function getLayout {
   param([string] $name)
   $fn = "./tmp/${name}.json"
