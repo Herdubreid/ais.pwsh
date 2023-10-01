@@ -11,14 +11,16 @@ function init {
 function go {
     try {
         $flt = show-celin.ais.ui.form $frm.search
-        $s = "f9865 (fmnm,md,fmpt,sy) all($(qop "fmnm" "^" $flt.data[0].value.toupper()) $(qop "md" "?" $flt.data[1].value) $(qop "fmpt" "=" $flt.data[2].value.toupper()) $(qop "sy" "^" $flt.data[3].value)".trim() + ")"
-
-        show-celin.ais.ui.progressbar { $frm.rs = submit-celin.ais.query $s } $frm.pb
-        
-        $frm.select.set($frm.rs.data)
-        $form = show-celin.ais.ui.gridform $frm.select
-        if ($form) {
-            $frm.demo = get-celin.ais.ui $form.data[0].row[0]
+        if ($flt) {
+            $s = "f9865 (fmnm,md,fmpt,sy) all($(qop "fmnm" "^" $flt.data[0].value.toupper()) $(qop "md" "?" $flt.data[1].value) $(qop "fmpt" "=" $flt.data[2].value.toupper()) $(qop "sy" "^" $flt.data[3].value)".trim() + ")"
+            
+            show-celin.ais.ui.progressbar { $frm.rs = submit-celin.ais.query $s } $frm.pb
+            
+            $frm.select.set($frm.rs.data)
+            $form = show-celin.ais.ui.gridform $frm.select
+            if ($form) {
+                $frm.demo = get-celin.ais.ui $form.data[0].row[0]
+            }
         }
     }
     catch {

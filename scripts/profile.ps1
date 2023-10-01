@@ -615,10 +615,10 @@ Set-PSReadLineKeyHandler -Chord 'Alt+x' `
 function getScript {
     param([string[]] $names)
     foreach ($n in $names) {
-        if (-not (Test-Path "./tmp/${n}.ps1")) {
-            Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/scripts/${n}.ps1" -OutFile "./tmp/${n}.ps1"
+        if (-not (Test-Path "./$tmp$n.psm1")) {
+            Invoke-WebRequest -Uri "$source/$mod$n.psm1" -OutFile "./$tmp$n.psm1"
         }
-        . ./tmp/${n}.ps1
+        Import-Module ./$tmp$n.psm1 -Force -Global
     }
 }
 # Get Layout
@@ -630,3 +630,108 @@ function getLayout {
     }
     return Get-Content $fn -Raw
 }
+
+# Prompt
+function prompt {
+    $buf = $null
+    # Test the input command
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$buf, [ref]$null)
+    if (-not $buf -or $buf -eq "last") {
+        # If blank, then clear the screen
+        [Console]::Clear()
+    }
+    # Get the cursor line
+    $top = [Console]::CursorTop
+    if ($top -eq 0) {
+        # If in the first line, write header
+        $title = "No Host`n"
+        if ($env:CELIN_DEFAULT_AIS) {
+            # Get the current variable
+            $var = get-variable $env:CELIN_DEFAULT_AIS
+            if ($var) {
+
+                $center = "Not Connected"
+                $right = ""
+                if ($var.Value.AuthResponse) {
+                    # If get the environment and user
+                    $center = $var.Value.AuthResponse.environment
+                    $right = $var.Value.AuthResponse.username
+                }
+                # Build the header string
+                $sp = [Console]::BufferWidth - $center.Length;
+                [int]$rpad = $sp / 2        
+                $title = $var.Name.PadRight($sp - $rpad) `
+                    + $center `
+                    + $right.PadLeft($rpad) + "`n"
+            }
+            if ($hint) {
+                $title2 = $hint + "`n"
+            }
+        }
+    }
+    return "$title$title2$(Split-Path -Path (Get-Location) -Leaf) : "
+}
+# Use
+<#
+.SYNOPSIS
+    Start action.
+.DESCRIPTION
+    Loads script for action.
+.PARAMETER name
+    Name of action.
+.EXAMPLE
+    use <action name>.
+#>
+function use {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true, HelpMessage = "Enter action name")]
+        [string] $name,
+        [Parameter(ValueFromRemainingArguments = $true)]
+        [string[]] $params
+    )
+  
+    $Global:source = "https://raw.githubusercontent.com/Herdubreid/ais.pwsh/main/scripts";
+    $global:tmp = "tmp/"
+  
+    try {
+        $ProgressPreference = 'SilentlyContinue' # Subsequent calls do not display UI.
+        remove-item function:\init -ErrorAction SilentlyContinue
+        remove-item function:\go -ErrorAction SilentlyContinue
+  
+        $from = "$source/$mod$name"
+        $to = "./$tmp$mod$name"
+        if (-not $mod) {
+            if (-not (Test-Path $to)) {
+                New-Item $to -ItemType Directory | Out-Null
+            }
+            $from += "/default"
+            $to += "/default"
+        }
+        $to += ".psm1"
+        $from += ".psm1"
+  
+        if (-not (Test-Path $to)) {
+            Invoke-WebRequest -Uri $from -OutFile $to
+        }
+      
+        Import-Module $to -Force -Global
+      
+        init $params
+    }
+    catch {
+        Write-Host "'$name' not available"
+    }
+    finally {
+        $ProgressPreference = 'Continue' # Subsequent calls do display UI.
+    }
+}
+  
+function q {
+    remove-item function:\init -ErrorAction SilentlyContinue
+    remove-item function:\go -ErrorAction SilentlyContinue
+    $Global:hint = $null
+    $Global:mod = $null
+    Clear-Host
+}
+  
