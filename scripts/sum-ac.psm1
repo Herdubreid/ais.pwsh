@@ -27,6 +27,7 @@ function sumAc {
             }
         }
         try {
+            [System.Console]::Write("`rSum {0} of {1}", @($cnt, $data.count()))
             $rs = Submit-Celin.AIS.Query "$f0911 $q)"
             if ($rs.data.grid.detail.count() -gt 0) {
                 foreach ($r in $rs.data.grid.detail) {

@@ -15,7 +15,7 @@ $ac.accFrm.statusbar.add("To Excel", "Alt-X")
 $ac.accFrm.header.format = "{0,20} {1, 17:N2} {2,3} {3,-30} {4,3} {5,3} {6,3}"
 $ac.accFrm.header.data = @("Account", "Balance", "CUR", "Description", "Trx", "LOD", "PEC")
 # Set the Body
-$ac.accFrm.body.format = "{0,20} {1, 17:N2} {2,3} {3,-30} {4,3} {5,3} {6,3}"
+$ac.accFrm.body.format = "{0,-16} {1, 17:N2} {2,3} {3,-30} {4,3} {5,3} {6,3}"
 try {
     # Loop until Esc
     do {
