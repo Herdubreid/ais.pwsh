@@ -29,32 +29,38 @@ try {
             $ac.lodRows = sumAc $ac.lod.data.grid.detail
             $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
             $ac.accFrm.set($ac.rows)
-            # Loop until Esc
+            # Set the Title
+            $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4])"
+            # Show Form
             do {
-                # Show Form
+                # Loop until Esc
                 $ac.next = Show-Celin.AIS.Ui.GridForm $ac.accFrm
                 if ($ac.next) {
                     # Get the Original Row
                     $ac.r = $ac.lodRows[$ac.next.data.index]
-                    # Build the Query String
-                    $ac.q = "$($ac.mcuq) obj>=$($ac.r[3].trim())"
-                    if ($ac.r[4].trim()) {
-                        $ac.q += " sub>=$($ac.r[4].trim())"
-                    }
-                    if ($ac.next.data.index -lt $ac.lod.data.grid.detail.count() - 1) {
-                        $ac.r = $ac.lodRows[$ac.next.data.index + 1]
-                        $ac.q += " obj<$($ac.r[3].trim())"
-                        if ($ac.r[4].trim()) {
-                            $ac.q += " sub<$($ac.r[4].trim())"
+                    # Find next Row
+                    $ac.r2 = $null
+                    for ($ndx = $ac.next.data.index; $ndx -lt $ac.lodRows.length; $ndx++) {
+                        if ($ac.r[3] -ne $ac.lodRows[$ndx][3] -or $ac.r[4] -ne $ac.lodRows[$ndx][4]) {
+                            $ac.r2 = $ac.lodRows[$ndx]
+                            break
                         }
                     }
-                    $rs = Submit-Celin.AIS.Query "$($ac.f0901) all(lda=$([int]$ac.r[6] + 1) $($ac.q))"
+                    # Build the Query String
+                    $fixed = "lda=$([int]$ac.r[6] + 1) mcu=$($ac.mcu.data.row[0].trim())"
+                    if ($ac.r2) {
+                        $ac.q = acFromToQ $fixed  $ac.r[3].trim() $ac.r[4].trim() $ac.r2[3].trim() $ac.r2[4].trim()
+                    } else {
+                        $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim()
+                    }
+                    $rs = Submit-Celin.AIS.Query "$($ac.f0901) $($ac.q)"
                     if ($rs.data.grid.detail.count() -gt 0) {
                         $ac.lod = $rs
                         # Sum the Level
                         $ac.lodRows = sumAc $ac.lod.data.grid.detail
                         $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
                         $ac.accFrm.set($ac.rows)
+                        $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4]) - $($ac.next.data.row[0]) $($ac.next.data.row[3])"
                     }
                     else {
                         $ac.msg.Message.Text = "No records returned!"

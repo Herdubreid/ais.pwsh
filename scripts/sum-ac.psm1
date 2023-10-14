@@ -26,8 +26,6 @@ function sumAc {
                 $q += " sub>=$($r1[4].trim())"
             }
         }
-        write-host "$f0911 $q)"
-        write-host
         try {
             $rs = Submit-Celin.AIS.Query "$f0911 $q)"
             if ($rs.data.grid.detail.count() -gt 0) {
@@ -42,6 +40,7 @@ function sumAc {
             }
         }
         catch {
+            write-host "$f0911 $q)"
             Write-Host $_ -ForegroundColor Red
             return $rows
         }
