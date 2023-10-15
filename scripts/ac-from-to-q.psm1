@@ -14,7 +14,7 @@ function acFromToQ {
         }
         $q += ") or all($fixed obj>$fromObj obj<$toObj"
         if ($toSub) {
-            $q += ") or all($fixed obj=$toObj sub<$toSub"
+            $q += ") and all($fixed obj=$toObj sub<$toSub"
         }
     }
     else {
