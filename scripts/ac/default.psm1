@@ -62,11 +62,13 @@ function go {
                 # Fetch the First Level
                 $ac.lod = Submit-Celin.AIS.Query "$($ac.f0901) all($($ac.mcuq) lda=$($ac.mcu.data.row[7]) obj!blank)"
                 # Sum the Level
-                $ac.lodRows = sumAc $ac.lod.data.grid.detail $ac.lastR2
+                $ac.lodRows = sumAc $ac.lod.data.grid.detail.toArray() $ac.lastR2
                 $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
                 $ac.accFrm.set($ac.rows)
                 # Set the Title
                 $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4])"
+                # Init Path
+                $ac.path = @()
                 # Show Form
                 do {
                     # Loop until Esc
@@ -74,9 +76,11 @@ function go {
                     if ($ac.next) {
                         # Get the Original Row
                         $ac.r = $ac.lodRows[$ac.next.data.index]
+                        # Add to Path
+                        $ac.path += ,$ac.r[0..8]
                         # Find next Row (use last r2 as default)
                         $ac.r2 = $ac.lastR2
-                        for ($ndx = $ac.next.data.index; $ndx -lt $ac.lodRows.length; $ndx++) {
+                        for ($ndx = ($ac.next.data.index + $ac.path.length); $ndx -lt $ac.lodRows.length; $ndx++) {
                             if ($ac.r[3] -ne $ac.lodRows[$ndx][3] -or $ac.r[4] -ne $ac.lodRows[$ndx][4]) {
                                 $ac.r2 = $ac.lodRows[$ndx]
                                 $ac.lastR2 = $ac.r2
@@ -86,7 +90,7 @@ function go {
                         # Build the Query String
                         $fixed = "lda=$([int]$ac.r[6] + 1) mcu=$($ac.mcu.data.row[0].trim())"
                         if ($ac.r2) {
-                            $ac.q = acFromToQ $fixed  $ac.r[3].trim() $ac.r[4].trim() $ac.r2[3].trim() $ac.r2[4].trim()
+                            $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim() $ac.r2[3].trim() $ac.r2[4].trim()
                         }
                         else {
                             $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim()
@@ -95,7 +99,7 @@ function go {
                         if ($rs.data.grid.detail.count() -gt 0) {
                             $ac.lod = $rs
                             # Sum the Level
-                            $ac.lodRows = sumAc $ac.lod.data.grid.detail $ac.lastR2
+                            $ac.lodRows = sumAc ($ac.path + $ac.lod.data.grid.detail) $ac.lastR2
                             $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
                             $ac.accFrm.set($ac.rows)
                             $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4]) - $($ac.next.data.row[0]) $($ac.next.data.row[3])"
