@@ -58,17 +58,18 @@ function go {
             # Show Form
             $ac.mcu = Show-Celin.AIS.Ui.GridForm $ac.mcuFrm
             if ($ac.mcu) {
-                $ac.lastR2 = @($ac.mcu.data.row[3], $null, $ac.mcu.data.row[0], "XXXX", "")
+                $ac.lastR2 = , @($ac.mcu.data.row[3], $null, $ac.mcu.data.row[0], "XXXX", "")
                 $ac.mcuq = "mcu=$($ac.mcu.data.row[0].trim())"
                 # Fetch the First Level
                 $ac.lod = Submit-Celin.AIS.Query "$($ac.f0901) all($($ac.mcuq) lda=$($ac.mcu.data.row[7]) obj!blank)"
                 # Sum the Level
-                $ac.lodRows = sumAc $ac.lod.data.grid.detail.toArray() $ac.lastR2
-                $ac.mcuRows = @($ac.lodRows | foreach-object $ac.fmt) 
-                $ac.accFrm.set($ac.mcuRows)
+                $ac.lodRows = sumAc $ac.lod.data.grid.detail.toArray() $ac.lastR2[0]
+                $ac.mcuRows = $ac.lodRows
+                $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
+                $ac.accFrm.set($ac.rows)
                 # Set the Title
                 $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4])"
-                # Init Path
+                # Init State
                 $ac.path = @()
                 $ac.history = @()
                 # Show Form
@@ -81,7 +82,6 @@ function go {
                             toTable $h $d | Export-Excel -NoNumberConversion *
                         }
                         else {
-
                             # Get the Original Row
                             $ac.r = $ac.lodRows[$ac.next.data.index]
                             # Check for Backtrack
@@ -94,34 +94,30 @@ function go {
                             }
                             if ($ndx -lt 0) {
                                 # Find next Row (use last r2 as default)
-                                $ac.r2 = $ac.lastR2
-                                for ($ndx = ($ac.next.data.index + $ac.path.length); $ndx -lt $ac.lodRows.length; $ndx++) {
-                                    if ($ac.r[3] -ne $ac.lodRows[$ndx][3] -or $ac.r[4] -ne $ac.lodRows[$ndx][4]) {
-                                        $ac.r2 = $ac.lodRows[$ndx]
-                                        $ac.lastR2 = $ac.r2
+                                $ac.r2 = $ac.lastR2[$ac.lastR2.length - 1]
+                                for ($i = ($ac.next.data.index + $ac.path.length); $i -lt $ac.lodRows.length; $i++) {
+                                    if ($ac.r[3] -ne $ac.lodRows[$i][3] -or $ac.r[4] -ne $ac.lodRows[$i][4]) {
+                                        $ac.r2 = $ac.lodRows[$i]
+                                        $ac.lastR2 += , $ac.r2
                                         break
                                     }
                                 }
                                 # Build the Query String
                                 $fixed = "lda=$([int]$ac.r[6] + 1) mcu=$($ac.mcu.data.row[0].trim())"
-                                if ($ac.r2) {
-                                    $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim() $ac.r2[3].trim() $ac.r2[4].trim()
-                                }
-                                else {
-                                    $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim()
-                                }
+                                $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim() $ac.r2[3].trim() $ac.r2[4].trim()
+                                # Submit the Query
                                 $rs = Submit-Celin.AIS.Query "$($ac.f0901) $($ac.q)"
                                 if ($rs.data.grid.detail.count() -gt 0) {
                                     $ac.lod = $rs
                                     # Add to Path
                                     $ac.path += , $ac.r[0..8]
                                     # Sum the Level
-                                    $ac.lodRows = sumAc ($ac.path + $ac.lod.data.grid.detail) $ac.lastR2
+                                    $ac.lodRows = sumAc ($ac.path + $ac.lod.data.grid.detail) $ac.r2
                                     $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
                                     $ac.accFrm.set($ac.rows)
                                     $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4]) - $($ac.next.data.row[0]) $($ac.next.data.row[3])"
                                     # Add to History
-                                    $ac.history += , $ac.rows
+                                    $ac.history += , $ac.lodRows
                                 }
                                 else {
                                     $ac.msg.Message.Text = "No records returned!"
@@ -129,20 +125,21 @@ function go {
                                 }
                             }
                             else {
+                                $ac.lastR2 = $ac.lastR2[0..$ndx]
                                 $ndx--
                                 if ($ndx -lt 0) {
                                     $ac.path = @()
                                     $ac.history = @()
-                                    $ac.rows = $ac.mcuRows               
+                                    $ac.lodRows = $ac.mcuRows
                                     $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4])"
                                 }
                                 else {
                                     $ac.path = $ac.path[0..$ndx]
                                     $ac.history = $ac.history[0..$ndx]
-                                    $ac.rows = $ac.history[$ndx]
-                                    $ac.accFrm.set($ac.rows)
+                                    $ac.lodRows = $ac.history[$ndx]
                                     $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4]) - $($ac.next.data.row[0]) $($ac.next.data.row[3])"
                                 }
+                                $ac.rows = @($ac.lodRows | foreach-object $ac.fmt)
                                 $ac.accFrm.set($ac.rows)
                             }
                         }
