@@ -43,6 +43,6 @@ function sumAc {
             return $rows
         }
     }
-    Write-Host "`r"
+    [System.Console]::Write("`r")
     return $rows
 }

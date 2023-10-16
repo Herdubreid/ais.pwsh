@@ -1,0 +1,22 @@
+{
+  "normal": {
+    "backGround": "Black",
+    "foreGround": "BrightYellow"
+  },
+  "hotNormal": {
+    "backGround": "Black",
+    "foreGround": "Brown"
+  },
+  "focus": {
+    "backGround": "BrightYellow",
+    "foreGround": "Black"
+  },
+  "hotFocus": {
+    "backGround": "Brown",
+    "foreGround": "Black"
+  },
+  "disabled": {
+    "backGround": "Black",
+    "foreGround": "Brown"
+  }
+}

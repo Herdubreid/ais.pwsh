@@ -14,7 +14,7 @@ function init {
 
     # Init Accounts
     $ac.f0901 = "f0901 -max no (co,aid,mcu,obj,sub,dl01,lda,pec,crcd) by[asc(obj,sub)]"
-    $ac.fmt = { , @(("{0}.{1}.{2}" -f $_[2].trim(), $_[3], $_[4].trim()).trimEnd('.'), $_[10], $_[9], $_[5], $_[11], $_[12], $_[6], $_[7]) }
+    $ac.fmt = { , @(("{0}{1}.{2}.{3}" -f "".PadRight($_[6], ' '), $_[2].trim(), $_[3], $_[4].trim()).trimEnd('.'), $_[10], $_[9], $_[5], $_[11], $_[12], $_[6], $_[7]) }
     # Get Msg Form
     $ac.msg = ConvertFrom-Celin.AIS.Ui.Prompt (getLayout error-msg)
     # Get a base Grid Form
@@ -26,10 +26,10 @@ function init {
     $ac.accFrm.statusbar.add("Esc - Back to BU's")
     $ac.accFrm.statusbar.add("To Excel", "Alt-X")
     # Set the Header
-    $ac.accFrm.header.format = "{0,-16} {1, 17:N2} {2,3} {3,-30} {4,6} {5,4} {6,3} {7,3}"
-    $ac.accFrm.header.data = @("Account", "Balance", "CUR", "Description", "Trx", "Accs", "LOD", "PEC")
+    $ac.accFrm.header.format = "{0,-20} {1, 17:N2} {2,3} {3,-30} {4,6} {5,4} {6,3} {7,3}"
+    $ac.accFrm.header.data = @("     Account    ", "Balance", "CUR", "Description", "Trx", "Accs", "LOD", "PEC")
     # Set the Body
-    $ac.accFrm.body.format = "{0,-16} {1, 17:N2} {2,3} {3,-30} {4,6} {5,4} {6,3} {7,3}"
+    $ac.accFrm.body.format = "{0,-20} {1, 17:N2} {2,3} {3,-30} {4,6} {5,4} {6,3} {7,3}"
 
     # Get Helpers
     getScript ac-from-to-q
@@ -63,50 +63,78 @@ function go {
                 $ac.lod = Submit-Celin.AIS.Query "$($ac.f0901) all($($ac.mcuq) lda=$($ac.mcu.data.row[7]) obj!blank)"
                 # Sum the Level
                 $ac.lodRows = sumAc $ac.lod.data.grid.detail.toArray() $ac.lastR2
-                $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
-                $ac.accFrm.set($ac.rows)
+                $ac.mcuRows = @($ac.lodRows | foreach-object $ac.fmt) 
+                $ac.accFrm.set($ac.mcuRows)
                 # Set the Title
                 $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4])"
                 # Init Path
                 $ac.path = @()
+                $ac.history = @()
                 # Show Form
                 do {
                     # Loop until Esc
                     $ac.next = Show-Celin.AIS.Ui.GridForm $ac.accFrm
-                    if ($ac.next) {
+                    if ($ac.next) {                        
                         # Get the Original Row
                         $ac.r = $ac.lodRows[$ac.next.data.index]
-                        # Add to Path
-                        $ac.path += ,$ac.r[0..8]
-                        # Find next Row (use last r2 as default)
-                        $ac.r2 = $ac.lastR2
-                        for ($ndx = ($ac.next.data.index + $ac.path.length); $ndx -lt $ac.lodRows.length; $ndx++) {
-                            if ($ac.r[3] -ne $ac.lodRows[$ndx][3] -or $ac.r[4] -ne $ac.lodRows[$ndx][4]) {
-                                $ac.r2 = $ac.lodRows[$ndx]
-                                $ac.lastR2 = $ac.r2
+                        # Check for Backtrack
+                        $ndx = -1
+                        for ($i = 0; $i -lt $ac.path.length; $i++) {
+                            if (-not (Compare-Object $ac.path[$i][0..4] $ac.r[0..4])) {
+                                $ndx = $i
                                 break
                             }
                         }
-                        # Build the Query String
-                        $fixed = "lda=$([int]$ac.r[6] + 1) mcu=$($ac.mcu.data.row[0].trim())"
-                        if ($ac.r2) {
-                            $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim() $ac.r2[3].trim() $ac.r2[4].trim()
-                        }
-                        else {
-                            $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim()
-                        }
-                        $rs = Submit-Celin.AIS.Query "$($ac.f0901) $($ac.q)"
-                        if ($rs.data.grid.detail.count() -gt 0) {
-                            $ac.lod = $rs
-                            # Sum the Level
-                            $ac.lodRows = sumAc ($ac.path + $ac.lod.data.grid.detail) $ac.lastR2
-                            $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
+                        if ($ndx -lt 0) {
+                            # Find next Row (use last r2 as default)
+                            $ac.r2 = $ac.lastR2
+                            for ($ndx = ($ac.next.data.index + $ac.path.length); $ndx -lt $ac.lodRows.length; $ndx++) {
+                                if ($ac.r[3] -ne $ac.lodRows[$ndx][3] -or $ac.r[4] -ne $ac.lodRows[$ndx][4]) {
+                                    $ac.r2 = $ac.lodRows[$ndx]
+                                    $ac.lastR2 = $ac.r2
+                                    break
+                                }
+                            }
+                            # Build the Query String
+                            $fixed = "lda=$([int]$ac.r[6] + 1) mcu=$($ac.mcu.data.row[0].trim())"
+                            if ($ac.r2) {
+                                $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim() $ac.r2[3].trim() $ac.r2[4].trim()
+                            }
+                            else {
+                                $ac.q = acFromToQ $fixed $ac.r[3].trim() $ac.r[4].trim()
+                            }
+                            $rs = Submit-Celin.AIS.Query "$($ac.f0901) $($ac.q)"
+                            if ($rs.data.grid.detail.count() -gt 0) {
+                                $ac.lod = $rs
+                                # Add to Path
+                                $ac.path += , $ac.r[0..8]
+                                # Sum the Level
+                                $ac.lodRows = sumAc ($ac.path + $ac.lod.data.grid.detail) $ac.lastR2
+                                $ac.rows = @($ac.lodRows | foreach-object $ac.fmt) 
+                                $ac.accFrm.set($ac.rows)
+                                $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4]) - $($ac.next.data.row[0]) $($ac.next.data.row[3])"
+                                # Add to History
+                                $ac.history += , $ac.rows
+                            }
+                            else {
+                                $ac.msg.Message.Text = "No records returned!"
+                                Show-Celin.AIS.Ui.Prompt $ac.msg | Out-Null
+                            }
+                        } else {
+                            $ndx--
+                            if ($ndx -lt 0) {
+                                $ac.path = @()
+                                $ac.history = @()
+                                $ac.rows = $ac.mcuRows               
+                                $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4])"
+                            } else {
+                                $ac.path = $ac.path[0..$ndx]
+                                $ac.history = $ac.history[0..$ndx]
+                                $ac.rows = $ac.history[$ndx]
+                                $ac.accFrm.set($ac.rows)
+                                $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4]) - $($ac.next.data.row[0]) $($ac.next.data.row[3])"
+                            }
                             $ac.accFrm.set($ac.rows)
-                            $ac.accFrm.title = "$($ac.mcu.data.row[0]) $($ac.mcu.data.row[4]) - $($ac.next.data.row[0]) $($ac.next.data.row[3])"
-                        }
-                        else {
-                            $ac.msg.Message.Text = "No records returned!"
-                            Show-Celin.AIS.Ui.Prompt $ac.msg | Out-Null
                         }
                     }
                 } until (-not $ac.next)
