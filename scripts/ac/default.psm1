@@ -49,8 +49,6 @@ function go {
         $ac.g = $ac.rs.data.grid
         # Create a Joined Grid (using CO,MCU)
         $ac.j = $ac.mcus.join($ac.g, @("CO", "MCU"))
-        # Display the Heading
-        $ac.j.header
         # Use the Joined Detail
         $ac.mcuFrm.set($ac.j.detail)
         # Loop until Esc
@@ -79,7 +77,7 @@ function go {
                     if ($ac.next) {
                         if ($ac.next.key -eq "X, AltMask") {
                             # Excel Export
-                            toTable $h $d | Export-Excel -NoNumberConversion *
+                            toTable $ac.accFrm.header.data $ac.accFrm.body.data | Export-Excel -NoNumberConversion *
                         }
                         else {
                             # Get the Original Row
