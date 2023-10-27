@@ -1,4 +1,6 @@
 function init {
+    $Global:hint = "Form Query (enter 'go' to start, 'q' to quit)"
+
     # Set Constants
     New-Variable search (convertFrom-celin.ais.ui.form (getLayout form-search)) -Option ReadOnly -Force -Scope Global
     New-Variable select (convertfrom-celin.ais.ui.gridform (getLayout form-select)) -Option ReadOnly -Force -Scope Global
