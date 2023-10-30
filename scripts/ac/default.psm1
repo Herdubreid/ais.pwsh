@@ -88,7 +88,7 @@ function go {
                             if (-not $label) {
                                 # Get the From Account
                                 cs fromAc $var.value.lod[$var.value.next.data.index]
-                                # Set to Account, if not last in the list
+                                # Set To Account, if not last in the list
                                 for ($i = $var.value.next.data.index + 1; $i -lt $var.value.lod.length; $i++) {
                                     if ($var.value.lod[$i][1] -ne $var.value.lod[$var.value.next.data.index][1]) {
                                         cset toAc $var.value.lod[$i]
