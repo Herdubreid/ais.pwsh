@@ -39,14 +39,17 @@ function init {
 
 function go {
     # Variables
-    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, sum, rows, next -Force
+    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, sum, rows, next -UseIfExist
     try {
-        # Fetch BU Master
-        Submit-Celin.AIS.Query "f0006 -max no (mcu,styl,ldm,co,dl01)" | cset rs
-        # Fetch the BU Account Stats
-        Submit-Celin.AIS.Query "f0901 [group(co,mcu) min(lda) max(lda) count(aid) asc(co,mcu)]" | cset rs
-        # Create a Joined Grid (using CO,MCU)
-        $var.values[1].rs.data.grid.join($var.values[0].rs.data.grid, @("CO", "MCU")) | cset mcus
+        # Check if MCU's already populated
+        if (-not $var.value.mcus) {
+            # Fetch BU Master
+            Submit-Celin.AIS.Query "f0006 -max no (mcu,styl,ldm,co,dl01)" | cset rs
+            # Fetch the BU Account Stats
+            Submit-Celin.AIS.Query "f0901 [group(co,mcu) min(lda) max(lda) count(aid) asc(co,mcu)]" | cset rs
+            # Create a Joined Grid (using CO,MCU)
+            $var.values[1].rs.data.grid.join($var.values[0].rs.data.grid, @("CO", "MCU")) | cset mcus
+        }
         # Use the Joined Detail
         $mcuFrm.set($var.value.mcus.detail)
         # Loop until Esc
@@ -107,7 +110,7 @@ function go {
                                 }
                                 else {
                                     $msg.Message.Text = "No records returned!"
-                                    Show-Celin.AIS.Ui.Prompt $ac.msg | Out-Null
+                                    Show-Celin.AIS.Ui.Prompt $msg | Out-Null
                                 }
                             }
                             if ($label) {
