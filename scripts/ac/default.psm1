@@ -39,7 +39,7 @@ function init {
 
 function go {
     # Variables
-    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, sum, rows, next -UseIfExist
+    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, rows, next -UseIfExist
     try {
         # Check if MCU's already populated
         if (-not $var.value.mcus) {
@@ -57,11 +57,11 @@ function go {
             # Show Form
             Show-Celin.AIS.Ui.GridForm $mcuFrm | cset mcu -FalseIfNull
             if ($var.value.mcu) {
+                # Default the to Account
+                cset toAc @($var.value.mcu.data.row[3], $null, $var.value.mcu.data.row[0], "XXXX", "")
                 # Check if already labelled
                 $label = Get-Celin.State $var.value.mcu.data.row[0] -FalseIfNone
                 if (-not $label) {
-                    # Default the to Account
-                    cset toAc @($var.value.mcu.data.row[3], $null, $var.value.mcu.data.row[0], "XXXX", "")
                     # Set the query string (useful for debug)
                     cset q "$f0901 all(mcu=$($var.value.mcu.data.row[0].trim()) lda=$($var.value.mcu.data.row[7]) obj!blank)"
                     # Fetch the First Level
@@ -72,6 +72,9 @@ function go {
                     cset rows @($var.value.lod | foreach-object $fmt)
                     # Label the state wih the mcu
                     $label = $var.setLabel($var.value.mcu.data.row[0])
+                } else {
+                    # Pass on the lod
+                    cset lod $label.lod
                 }
                 $accFrm.set($label.rows)
                 # Set the Title
@@ -112,6 +115,9 @@ function go {
                                     $msg.Message.Text = "No records returned!"
                                     Show-Celin.AIS.Ui.Prompt $msg | Out-Null
                                 }
+                            } else {
+                                # Pass on the lod
+                                cset lod $label.lod
                             }
                             if ($label) {
                                 $accFrm.set($label.rows)
