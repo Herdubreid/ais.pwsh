@@ -69,7 +69,7 @@ function go {
                     # Fetch the First Level
                     Submit-Celin.AIS.Query $var.value.q | cset rs
                     # Sum the Level
-                    cset lod (sumAc $var.value.rs.data.grid.detail.toArray() $var.value.toAc) 
+                    cset lod @(sumAc $var.value.rs.data.grid.detail.toArray() $var.value.toAc) 
                     # Format the rows for the Form
                     cset rows @($var.value.lod | foreach-object $fmt)
                     # Label the state wih the mcu
@@ -103,14 +103,14 @@ function go {
                                         break
                                     }
                                 }
-                                cset q "lda=$([int]$var.value.fromAc[6] + 1) mcu=$($var.value.mcu.data.row[0].trim())"
+                                cset q "lda<=$([int]$var.value.fromAc[6] + 1) mcu=$($var.value.mcu.data.row[0].trim())"
                                 cset q (acFromToQ $var.value.q $var.value.fromAc[3].trim() $var.value.fromAc[4].trim() $var.value.toAc[3].trim() $var.value.toAc[4].trim())
                                 cset q "$($f0901) $($var.value.q)"
                                 # Submit the Query
                                 Submit-Celin.AIS.Query $var.value.q | cset rs
                                 if ($var.value.rs.data.grid.detail.count() -gt 0) {
                                     # Sum the Level
-                                    cset lod (sumAc $var.value.rs.data.grid.detail.toArray() $var.value.toAc)
+                                    cset lod @(sumAc $var.value.rs.data.grid.detail.toArray() $var.value.toAc)
                                     cset rows @($var.value.lod | foreach-object $fmt) 
                                     $label = $var.setLabel($var.value.next.data.row[0])
                                 }
