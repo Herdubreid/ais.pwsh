@@ -36,10 +36,12 @@ function init {
     getScript sum-ac
     getScript to-table
 }
-
 function go {
+    param (
+        [bool]$clear
+    )
     # Variables
-    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, rows, next -UseIfExist
+    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, rows, next -Force -UseIfExist:(-not $clear)
     try {
         # Check if MCU's already populated
         if (-not $var.value.mcus) {
@@ -98,6 +100,7 @@ function go {
                                 for ($i = $var.value.next.data.index + 1; $i -lt $var.value.lod.length; $i++) {
                                     if ($var.value.lod[$i][1] -ne $var.value.lod[$var.value.next.data.index][1]) {
                                         cset toAc $var.value.lod[$i]
+                                        break
                                     }
                                 }
                                 cset q "lda=$([int]$var.value.fromAc[6] + 1) mcu=$($var.value.mcu.data.row[0].trim())"
@@ -118,6 +121,8 @@ function go {
                             } else {
                                 # Pass on the lod
                                 cset lod $label.lod
+                                # Use last toAc
+                                cset toAc $label.toAc
                             }
                             if ($label) {
                                 $accFrm.set($label.rows)
