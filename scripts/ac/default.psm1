@@ -24,6 +24,7 @@ function init {
     $accFrm.color = "high"
     # Set Keys
     $accFrm.statusbar.add("Esc - Back to BU's")
+    $accFrm.statusbar.add("Previous", "Alt-P")
     $accFrm.statusbar.add("To Excel", "Alt-X")
     # Set the Header
     $accFrm.header.format = "{0,-20} {1, 17:N2} {2,3} {3,-30} {4,6} {5,4} {6,3} {7,3}"
@@ -41,7 +42,7 @@ function go {
         [bool]$clear
     )
     # Variables
-    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, rows, next -Force -UseIfExist:(-not $clear)
+    $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, rows, next, prev -Force -UseIfExist:(-not $clear)
     try {
         # Check if MCU's already populated
         if (-not $var.value.mcus) {
@@ -73,18 +74,26 @@ function go {
                     # Format the rows for the Form
                     cset rows @($var.value.lod | foreach-object $fmt)
                     # Label the state wih the mcu
+                    cset next $var.value.mcu
                     $label = $var.setLabel($var.value.mcu.data.row[0])
-                } else {
-                    # Pass on the lod
+                }
+                else {
+                    # Default required values
                     cset lod $label.lod
                 }
+                # Store mcu as previous
+                cset prev $label.mcu
                 $accFrm.set($label.rows)
                 # Set the Title
                 $accFrm.title = "$($var.value.mcu.data.row[0]) $($var.value.mcu.data.row[4])"
                 # Show Form
                 while ($true) {
                     # Loop until Esc
+                    # Display Accounts
                     Show-Celin.AIS.Ui.GridForm $accFrm | cset next -FalseIfNull
+                    if ($var.value.next.key -eq "P, AltMask") {
+                        cset next $label.prev -FalseIfNull
+                    }
                     if ($var.value.next) {
                         if ($var.value.next.key -eq "X, AltMask") {
                             # Excel Export
@@ -113,16 +122,19 @@ function go {
                                     cset lod @(sumAc $var.value.rs.data.grid.detail.toArray() $var.value.toAc)
                                     cset rows @($var.value.lod | foreach-object $fmt) 
                                     $label = $var.setLabel($var.value.next.data.row[0])
+                                    # Store next as previous
+                                    cset prev $label.next
                                 }
                                 else {
                                     $msg.Message.Text = "No records returned!"
                                     Show-Celin.AIS.Ui.Prompt $msg | Out-Null
                                 }
-                            } else {
-                                # Pass on the lod
+                            }
+                            else {
+                                # Default required values from the label
                                 cset lod $label.lod
-                                # Use last toAc
                                 cset toAc $label.toAc
+                                cset prev $label.next -FalseIfNull
                             }
                             if ($label) {
                                 $accFrm.set($label.rows)
