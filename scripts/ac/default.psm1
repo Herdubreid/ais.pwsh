@@ -52,9 +52,9 @@ function go {
             Submit-Celin.AIS.Query "f0901 [group(co,mcu) min(lda) max(lda) count(aid) asc(co,mcu)]" | cset rs
             # Create a Joined Grid (using CO,MCU)
             $var.values[1].rs.data.grid.join($var.values[0].rs.data.grid, @("CO", "MCU")) | cset mcus
+            # Use the Joined Detail
+            $mcuFrm.set($var.value.mcus.detail)
         }
-        # Use the Joined Detail
-        $mcuFrm.set($var.value.mcus.detail)
         # Loop until Esc
         while ($true) {
             # Show Form
