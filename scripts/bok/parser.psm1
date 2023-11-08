@@ -13,27 +13,33 @@ function parser {
     # RegEx Pattern
     $pat = "^(?:(?'items'\d*)\s+)?(?'volume'\d+g|\d+ml)\s+(?'text'(?:(?!^\d)\w+\s)+)(?'amount'\d+.\d+)$|^Date\s+(?'date'\d{1,2}\/\d{1,2})$"
     foreach ($line in ($list -split "`r`n|`n")) {
-        cset match ($line | Select-String -Pattern $pat) -FalseIfNull
-        if ($var.match) {
-            # Get captured values
-            cset caps ($var.match.matches.groups | Select-Object success, name, value -Skip 1 | Where-Object success -eq $true | ForEach-Object { , @{ $_.Name = $_.Value } })
-            if ($var.caps.date) {
-                # Date record
-                $day, $month = $var.caps.date -split "/"
-                cset date (Get-Date -Year (Get-Date).Year -Month $month -Day $day)
+        try {
+            cstate match ($line | Select-String -Pattern $pat) -FalseIfNull
+            if ($var.match) {
+                # Get captured values
+                cstate caps ($var.match.matches.groups | `
+                        Select-Object success, name, value -Skip 1 | `
+                        Where-Object success -eq $true)
+                cstate caps (cpo $var.caps -NameValuePair)
+                if ($var.caps.date) {
+                    # Date record
+                    $day, $month = $var.caps.date -split "/"
+                    cstate date (Get-Date -Year (Get-Date).Year -Month $month -Day $day -Hour 0 -Minute 0 -Second 0)
+                }
+                else {
+                    cstate caps (cpo $var.caps, (@{date = $var.date }))
+                    # Add to success
+                    $result.success += , $var.caps
+                }
             }
             else {
-                cset caps ($var.caps + @{date = $var.date })
-                # Add to success
-                $result.success += , ($var.caps | ForEach-Object -Begin {
-                    $v = @{} } -Process {
-                        $v | Add-Member -MemberType NoteProperty -Name
-                    } -End { return $v } )
+                # Add to failed match
+                $result.failed += "$line`n"
             }
         }
-        else {
-            # Add to failed match
-            $result.failed += "$line`n"
+        catch {
+            write-host $_ -ForegroundColor Red
+            break           
         }
     }
     return $result

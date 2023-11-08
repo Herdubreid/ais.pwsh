@@ -1,5 +1,5 @@
 # Parse Shopping List
-$result = @"
+@"
 Date 1/10
 300g bread 4.20
 150g butter 6.50
