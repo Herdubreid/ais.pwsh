@@ -1,4 +1,4 @@
-# Parse Shopping List
+# Parse Shopping List with date variable
 @"
 Date 1/10
 300g bread 4.20
@@ -7,7 +7,7 @@ Date 1/10
 120g ham 4.60
 400g coffee 8.00
 6 500ml beer 16.00
-Date 4/10
+Date $date
 100g This will not parse
 300g bread 4.20
 150g ham 5.10
@@ -19,4 +19,4 @@ Nor will this
 Date 6/10
 300g bread 4.20
 120g ham 4.70
-"@ | parser
+"@
