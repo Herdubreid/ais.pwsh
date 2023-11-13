@@ -45,85 +45,91 @@ function go {
     $var = New-Celin.State ac rs, q, mcus, mcu, fromAc, toAc, lod, rows, next, prev -Force -UseIfExist:(-not $clear)
     try {
         # Check if MCU's already populated
-        if (-not $var.value.mcus) {
+        if (-not $var.mcus) {
             # Fetch BU Master
-            Submit-Celin.AIS.Query "f0006 -max no (mcu,styl,ldm,co,dl01)" | cset rs
+            Submit-Celin.AIS.Query "f0006 -max no (mcu,styl,ldm,co,dl01)" | cstate rs
             # Fetch the BU Account Stats
-            Submit-Celin.AIS.Query "f0901 [group(co,mcu) min(lda) max(lda) count(aid) asc(co,mcu)]" | cset rs
+            Submit-Celin.AIS.Query "f0901 [group(co,mcu) min(lda) max(lda) count(aid) asc(co,mcu)]" | cstate rs
             # Create a Joined Grid (using CO,MCU)
-            $var.values[1].rs.data.grid.join($var.values[0].rs.data.grid, @("CO", "MCU")) | cset mcus
+            $var.values[1].rs.data.grid.join($var.values[0].rs.data.grid, @("CO", "MCU")) | cstate mcus
             # Use the Joined Detail
-            $mcuFrm.set($var.value.mcus.detail)
+            $mcuFrm.set($var.mcus.detail)
         }
         # Loop until Esc
         while ($true) {
             # Show Form
-            Show-Celin.AIS.Ui.GridForm $mcuFrm | cset mcu -FalseIfNull
-            if ($var.value.mcu) {
+            Show-Celin.AIS.Ui.GridForm $mcuFrm | cstate mcu -FalseIfNull
+            if ($var.mcu) {
                 # Default the to Account
-                cset toAc @($var.value.mcu.data.row[3], $null, $var.value.mcu.data.row[0], "XXXX", "")
+                cstate toAc @($var.mcu.data.row[3], $null, $var.mcu.data.row[0], "XXXX", "")
                 # Check if already labelled
-                $label = Get-Celin.State $var.value.mcu.data.row[0] -FalseIfNone
+                $label = Get-Celin.State $var.mcu.data.row[0] -FalseIfNone
                 if (-not $label) {
                     # Set the query string (useful for debug)
-                    cset q "$f0901 all(mcu=$($var.value.mcu.data.row[0].trim()) lda=$($var.value.mcu.data.row[7]) obj!blank)"
+                    cstate q "$f0901 all(mcu=$($var.mcu.data.row[0].trim()) lda=$($var.mcu.data.row[7]) obj!blank)"
                     # Fetch the First Level
-                    Submit-Celin.AIS.Query $var.value.q | cset rs
+                    Submit-Celin.AIS.Query $var.q | cstate rs
                     # Sum the Level
-                    cset lod @(sumAc $var.value.rs.data.grid.detail.toArray() $var.value.toAc) 
+                    cstate lod @(sumAc $var.rs.data.grid.detail.toArray() $var.toAc) 
                     # Format the rows for the Form
-                    cset rows @($var.value.lod | foreach-object $fmt)
+                    cstate rows @($var.lod | foreach-object $fmt)
                     # Label the state wih the mcu
-                    cset next $var.value.mcu
-                    $label = $var.setLabel($var.value.mcu.data.row[0])
+                    cstate next $var.mcu
+                    $label = $var.setLabel($var.mcu.data.row[0])
                 }
                 else {
                     # Default required values
-                    cset lod $label.lod
+                    cstate lod $label.lod
                 }
                 # Store mcu as previous
-                cset prev $label.mcu
+                cstate prev $label.mcu
                 $accFrm.set($label.rows)
                 # Set the Title
-                $accFrm.title = "$($var.value.mcu.data.row[0]) $($var.value.mcu.data.row[4])"
+                $accFrm.title = "$($var.mcu.data.row[0]) $($var.mcu.data.row[4])"
                 # Show Form
                 while ($true) {
                     # Loop until Esc
                     # Display Accounts
-                    Show-Celin.AIS.Ui.GridForm $accFrm | cset next -FalseIfNull
-                    if ($var.value.next.key -eq "P, AltMask") {
-                        cset next $label.prev -FalseIfNull
+                    Show-Celin.AIS.Ui.GridForm $accFrm | cstate next -FalseIfNull
+                    if ($var.next.key -eq "P, AltMask") {
+                        cstate next $label.prev -FalseIfNull
                     }
-                    if ($var.value.next) {
-                        if ($var.value.next.key -eq "X, AltMask") {
+                    if ($var.next) {
+                        if ($var.next.key -eq "X, AltMask") {
                             # Excel Export
                             toTable $accFrm.header.data $accFrm.body.data | Export-Excel -NoNumberConversion *
                         }
                         else {
                             # Check if already labelled
-                            $label = Get-Celin.State $var.value.next.data.row[0] -FalseIfNone
+                            $label = Get-Celin.State $var.next.data.row[0] -FalseIfNone
                             if (-not $label) {
                                 # Get the From Account
-                                cs fromAc $var.value.lod[$var.value.next.data.index]
+                                cstate fromAc $var.lod[$var.next.data.index]
                                 # Set To Account, if not last in the list
-                                for ($i = $var.value.next.data.index + 1; $i -lt $var.value.lod.length; $i++) {
-                                    if ($var.value.lod[$i][1] -ne $var.value.lod[$var.value.next.data.index][1]) {
-                                        cset toAc $var.value.lod[$i]
+                                for ($i = $var.next.data.index + 1; $i -lt $var.lod.length; $i++) {
+                                    if ($var.lod[$i][1] -ne $var.lod[$var.next.data.index][1]) {
+                                        cstate toAc $var.lod[$i]
                                         break
                                     }
                                 }
-                                cset q "lda<=$([int]$var.value.fromAc[6] + 1) mcu=$($var.value.mcu.data.row[0].trim())"
-                                cset q (acFromToQ $var.value.q $var.value.fromAc[3].trim() $var.value.fromAc[4].trim() $var.value.toAc[3].trim() $var.value.toAc[4].trim())
-                                cset q "$($f0901) $($var.value.q)"
+                                cstate q "lda<=$([int]$var.fromAc[6] + 1) mcu=$($var.mcu.data.row[0].trim())"
+                                cstate q (acFromToQ $var.q $var.fromAc[3].trim() $var.fromAc[4].trim() $var.toAc[3].trim() $var.toAc[4].trim())
+                                cstate q "$($f0901) $($var.q)"
                                 # Submit the Query
-                                Submit-Celin.AIS.Query $var.value.q | cset rs
-                                if ($var.value.rs.data.grid.detail.count() -gt 0) {
+                                Submit-Celin.AIS.Query $var.q | cstate rs
+                                if ($var.rs.data.grid.detail.count() -gt 0) {
                                     # Sum the Level
-                                    cset lod @(sumAc $var.value.rs.data.grid.detail.toArray() $var.value.toAc)
-                                    cset rows @($var.value.lod | foreach-object $fmt) 
-                                    $label = $var.setLabel($var.value.next.data.row[0])
+                                    cstate lod (sumAc $var.rs.data.grid.detail.toArray() $var.toAc)
+                                    # If there is only one row, then pack force the two-dimensions
+                                    # of $var.lod because Powershell automatically flattens it
+                                    if ($var.rs.data.grid.detail.count() -eq 1) {
+                                        cstate rows @((, $var.lod) | foreach-object $fmt)
+                                    } else {
+                                        cstate rows @($var.lod | foreach-object $fmt)
+                                    }
+                                    $label = $var.setLabel($var.next.data.row[0])
                                     # Store next as previous
-                                    cset prev $label.next
+                                    cstate prev $label.next
                                 }
                                 else {
                                     $msg.Message.Text = "No records returned!"
@@ -132,13 +138,13 @@ function go {
                             }
                             else {
                                 # Default required values from the label
-                                cset lod $label.lod
-                                cset toAc $label.toAc
-                                cset prev $label.next -FalseIfNull
+                                cstate lod $label.lod
+                                cstate toAc $label.toAc
+                                cstate prev $label.next -FalseIfNull
                             }
                             if ($label) {
                                 $accFrm.set($label.rows)
-                                $accFrm.title = "$($var.value.mcu.data.row[0]) $($var.value.mcu.data.row[4]) - $($var.value.next.data.row[0]) $($var.value.next.data.row[3])"
+                                $accFrm.title = "$($var.mcu.data.row[0]) $($var.mcu.data.row[4]) - $($var.next.data.row[0]) $($var.next.data.row[3])"
                             }
                         }
                     }
@@ -153,6 +159,7 @@ function go {
         }
     }
     catch {
-        Write-Host $_ -ForegroundColor Red
+        # Report the error to the console
+        throw
     }
 }
