@@ -32,7 +32,7 @@ function init {
     # Set the Body
     $accFrm.body.format = "{0,-20} {1, 17:N2} {2,3} {3,-30} {4,6} {5,4} {6,3} {7,3}"
 
-    # Get Helpers
+    # Helpers
     getScript ac-from-to-q
     getScript sum-ac
     getScript to-table
@@ -120,13 +120,9 @@ function go {
                                 if ($var.rs.data.grid.detail.count() -gt 0) {
                                     # Sum the Level
                                     cstate lod (sumAc $var.rs.data.grid.detail.toArray() $var.toAc)
-                                    # If there is only one row, then pack force the two-dimensions
-                                    # of $var.lod because Powershell automatically flattens it
-                                    if ($var.rs.data.grid.detail.count() -eq 1) {
-                                        cstate rows @((, $var.lod) | foreach-object $fmt)
-                                    } else {
-                                        cstate rows @($var.lod | foreach-object $fmt)
-                                    }
+                                    # The below logic is needed because PS unpack single row arrays
+                                    # If the first row is not an array, then re-pack it as 2-dim array
+                                    cstate rows @($var.lod[0].rank -lt 1 ? (, $var.lod) : $var.lod | foreach-object $fmt)
                                     $label = $var.setLabel($var.next.data.row[0])
                                     # Store next as previous
                                     cstate prev $label.next
