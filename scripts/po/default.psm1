@@ -7,7 +7,7 @@ function go {
         [Parameter(Mandatory = $true)]
         [string] $app        
     )
-    $po = New-Celin.State po app, vers, po, rs -Force -UseIfExist
+    $po = New-Celin.State po app, vers, po, rs -Force
 
     try {
         cstate app $app.ToUpper()
