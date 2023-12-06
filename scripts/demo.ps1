@@ -1,17 +1,7 @@
-# Display the 
-# Get the state, the match displays matched string or False
-$shop = Use-Celin.State shop
-# Dump state trace
-$shop.trace
-# Use the ExpandProperty to display captured values
-$shop.trace | Select-Object -ExpandProperty caps | more
-# Use foreach to display the Matches.Groups values
-$shop.trace | ForEach-Object { $_.match.matches.groups } | more
-# Select captured fields and export them to Excel
-$shop.trace | ForEach-Object { $_.match.matches.groups } | Select-Object success, name, value | export-excel
-
-$shop.caps | ForEach-Object -Begin {
-    $v = @{} } -Process {
-    $v | Add-Member -MemberType NoteProperty -Name $_.Name -Value $_.Value
-} -End { return $v }
-    
+# Fetch PO's for P01012
+go P01012
+# Get the State Variable
+$po = Use-Celin.State po
+# The PO for each Version has a label, so we can collect them
+# in one go and export to excel
+$po.labels.po | Export-Excel
