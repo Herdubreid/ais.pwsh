@@ -21,25 +21,33 @@ function j2m {
 }
 function e2m {
     param(
-        [System.Collections.IEnumerable]$enumerable,
-        [int]$cols
+        $header,
+        $detail
     )
 
     # Get the dimensions
+    $cols = $header.length + 1
     try {
-        $rows = $enumerable.Count()
+        $rows = $detail.Count() + 1
     }
     catch {
-        $rows = 0
+        $rows = 1
     }
 
     # Create a 2D array
     $array2D = New-Object 'object[,]' $rows, $cols
 
-    # Fill the 2D array
-    for ($i = 0; $i -lt $rows; $i++) {
-        for ($j = 0; $j -lt $cols; $j++) {
-            $array2D[$i, $j] = $enumerable[$i][$j]
+    # Index
+    $array2D[0, 0] = "Row"
+    # Header
+    for ($i = 1; $i -lt $cols; $i++) {
+        $array2D[0, $i] = $header[$i - 1]
+    }
+    # Body
+    for ($i = 1; $i -lt $rows; $i++) {
+        $array2D[$i, 0] = $i
+        for ($j = 1; $j -lt $cols; $j++) {
+            $array2D[$i, $j] = $detail[$i - 1][$j - 1]
         }
     }
 
@@ -94,22 +102,29 @@ function xlParse {
         $var.formTable.HeaderRowRange.value2 = @("Id", "Alias", "Title", "Value")
         $a = $jde.formfields | ForEach-Object { , @($_.Id, $_.Alias, $_.Title, $_.Value) }
         $var.formTable.dataBodyRange.value2 = j2m $a
+        foreach ($c in $var.formTable.range.columns) { $c.Autofit() | Out-Null }
 
         # Create QBE Range
-        $var.range = $var.ws.cells.range("F2")
+        $var.range = $var.ws.cells.range("G2")
         $var.qbeRange = $var.range.resize(1, $jde.header.count())
+        $var.qbeRange.NumberFormat = "@"
         $var.qbeRange.Interior.ThemeColor = 3
         $var.qbeRange.value2 = $jde.qbe | ForEach-Object value
 
         # Create Grid Table
         $var.range = $var.ws.cells.range("F3")
-        $var.range = $var.range.resize($jde.Detail.Count() + 1, $jde.header.count())
+        $var.range = $var.range.resize($jde.Detail.Count() + 1, $jde.header.count() + 1)
         if ($jde.Detail.Count() -gt 0) {
-            $var.range.value = e2m $jde.Detail $jde.header.count()
+            for ($i = 1; $i -le $jde.Header.Count(); $i++) {
+                if ($jde.Detail[0][$i - 1].gettype().Name -eq "String") {
+                    $var.range.Columns.Item($i + 1).NumberFormat = "@"
+                }
+            }
         }
+        $var.range.value = e2m $jde.header.titles.toArray() $jde.Detail
+        foreach ($c in $var.range.columns) { $c.Autofit() | Out-Null }
         $var.gridTable = $var.ws.listobjects.add([Microsoft.Office.Interop.Excel.XlListObjectSourceType]::xlSrcRange, $var.range, $null, [Microsoft.Office.Interop.Excel.XlYesNoGuess]::xlYes)
         $var.gridTable.name = $gridTableName
-        $var.gridTable.HeaderRowRange.value2 = $jde.header.titles.toarray()
     }
     catch {
         Write-Host $_ -ForegroundColor Red
