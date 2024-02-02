@@ -50,7 +50,6 @@ function e2m {
             $array2D[$i, $j] = $detail[$i - 1][$j - 1]
         }
     }
-
     return , $array2D
 }
 function tryDelete {
@@ -76,13 +75,27 @@ function xlStart {
     # Create new workbook
     New-Variable wb ($xl.Workbooks.Add()) -Force -Scope Global
 }
-function xlParse {
-    param (
-        [Parameter(Mandatory = $true)]
-        $jde
-    )
-    $var = New-Celin.State xl ws, range, formTable, qbeRange, gridTable -Force
+function 2jde {
     try {
+        $var = Use-Celin.State xl
+        $jde.StartTrans()
+        $var.range = $var.formTable.databodyrange.value2
+        for ($i = 1; $i -le $var.range.getlength(0); $i++) {
+            $jde[$var.range[$i, 1]] = $var.range[$i, 4]
+        }
+        $var.range = $jde.header.toarray()
+        for ($i = 1; $i -le $var.range.length; $i++) {
+            $jde.qbe[$var.range[$i - 1].Id] = $var.qbeRange.value2[1, $i]
+        }
+        $jde.CommitTrans()
+    }
+    catch {
+        Write-Host $_ -ForegroundColor Red
+    }
+}
+function 2xl {
+    try {
+        $var = New-Celin.State xl ws, range, formTable, qbeRange, gridTable -Force
         $formTableName = $jde.formresponse.currentApp + "_FormFields"
         $gridTableName = $jde.formresponse.currentApp + "_Grid"
         try {
@@ -94,37 +107,41 @@ function xlParse {
         catch {
             $var.ws = $wb.worksheets.add()
             $var.ws.name = $jde.formresponse.currentApp
+            $var.ws.range("A1").value = $jde.title
         }
         # Create Form Fields Table
-        $var.range = $var.ws.cells.range("A3", "D$($jde.FormFields.length + 1)")
+        $var.range = $var.ws.cells.range("A3", "D$($jde.FormFields.length + 3)")
+        $var.range.Columns[4].NumberFormat = "@"
         $var.formTable = $var.ws.listobjects.add([Microsoft.Office.Interop.Excel.XlListObjectSourceType]::xlSrcRange, $var.range, $null, [Microsoft.Office.Interop.Excel.XlYesNoGuess]::xlYes)
         $var.formTable.name = $formTableName
         $var.formTable.HeaderRowRange.value2 = @("Id", "Alias", "Title", "Value")
         $a = $jde.formfields | ForEach-Object { , @($_.Id, $_.Alias, $_.Title, $_.Value) }
         $var.formTable.dataBodyRange.value2 = j2m $a
         foreach ($c in $var.formTable.range.columns) { $c.Autofit() | Out-Null }
-
-        # Create QBE Range
-        $var.range = $var.ws.cells.range("G2")
-        $var.qbeRange = $var.range.resize(1, $jde.header.count())
-        $var.qbeRange.NumberFormat = "@"
-        $var.qbeRange.Interior.ThemeColor = 3
-        $var.qbeRange.value2 = $jde.qbe | ForEach-Object value
-
-        # Create Grid Table
-        $var.range = $var.ws.cells.range("F3")
-        $var.range = $var.range.resize($jde.Detail.Count() + 1, $jde.header.count() + 1)
-        if ($jde.Detail.Count() -gt 0) {
-            for ($i = 1; $i -le $jde.Header.Count(); $i++) {
-                if ($jde.Detail[0][$i - 1].gettype().Name -eq "String") {
-                    $var.range.Columns.Item($i + 1).NumberFormat = "@"
+    
+        if ($null -ne $jde.header) {
+            # Create QBE Range
+            $var.range = $var.ws.cells.range("G2")
+            $var.qbeRange = $var.range.resize(1, $jde.header.count())
+            $var.qbeRange.NumberFormat = "@"
+            $var.qbeRange.Interior.ThemeColor = 3
+            $var.qbeRange.value2 = $jde.qbe | ForEach-Object value
+        
+            # Create Grid Table
+            $var.range = $var.ws.cells.range("F3")
+            $var.range = $var.range.resize($jde.Detail.Count() + 1, $jde.header.count() + 1)
+            if ($jde.Detail.Count() -gt 0) {
+                for ($i = 1; $i -le $jde.Header.Count(); $i++) {
+                    if ($jde.Detail[0][$i - 1]?.gettype().Name -eq "String") {
+                        $var.range.Columns.Item($i + 1).NumberFormat = "@"
+                    }
                 }
+                foreach ($c in $var.range.columns) { $c.Autofit() | Out-Null }
             }
+            $var.range.value2 = e2m $jde.header.titles.toArray() $jde.Detail
+            $var.gridTable = $var.ws.listobjects.add([Microsoft.Office.Interop.Excel.XlListObjectSourceType]::xlSrcRange, $var.range, $null, [Microsoft.Office.Interop.Excel.XlYesNoGuess]::xlYes)
+            $var.gridTable.name = $gridTableName
         }
-        $var.range.value = e2m $jde.header.titles.toArray() $jde.Detail
-        foreach ($c in $var.range.columns) { $c.Autofit() | Out-Null }
-        $var.gridTable = $var.ws.listobjects.add([Microsoft.Office.Interop.Excel.XlListObjectSourceType]::xlSrcRange, $var.range, $null, [Microsoft.Office.Interop.Excel.XlYesNoGuess]::xlYes)
-        $var.gridTable.name = $gridTableName
     }
     catch {
         Write-Host $_ -ForegroundColor Red
