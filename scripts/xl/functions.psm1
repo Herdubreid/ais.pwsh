@@ -135,6 +135,9 @@ function 2xl {
                     if ($jde.Detail[0][$i - 1]?.gettype().Name -eq "String") {
                         $var.range.Columns.Item($i + 1).NumberFormat = "@"
                     }
+                    if ($jde.Detail[0][$i - 1]?.gettype().Name -eq "DateTime") {
+                        $var.range.Columns.Item($i + 1).NumberFormat = [System.Globalization.CultureInfo]::CurrentCulture.DateTimeFormat.ShortDatePattern
+                    }
                 }
                 foreach ($c in $var.range.columns) { $c.Autofit() | Out-Null }
             }
