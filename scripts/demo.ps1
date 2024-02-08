@@ -5,7 +5,7 @@ go P01012
 $po = Use-Celin.State po
 # The PO for each Version has a label, so we can collect them
 # in one go and export to excel
-$po.labels.po | Export-Excel
+$po.getLabels.po | Export-Excel
 
 # Fetch Specs for R42565
 go r42565
@@ -15,7 +15,7 @@ $po = Use-Celin.State po
 # We only need this once
 $controls = $po.po.data.poprompt.tabpages.controls | Select-Object pageNumber, title, memberName, idObject
 # Get the PO values for each version
-$pos = $po.labels.po.data | Select-Object reportVersion, poValues
+$pos = $po.getLabels.po.data | Select-Object reportVersion, poValues
 # Define PoValue lookup
 $poLookup = { param($id) $pos | ForEach-Object {@{ $_.reportVersion = $_.poValues.where({$_.id -eq $id }).value }}}
 # Add version PO values

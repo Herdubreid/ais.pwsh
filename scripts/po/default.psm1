@@ -10,21 +10,21 @@ function go {
     $po = New-Celin.State po obnm, vers, po, rs -Force
 
     try {
-        cstate obnm $obnm.ToUpper()
+        $po.obnm = $obnm.ToUpper()
         # Fetch Versions
-        Submit-Celin.AIS.Query "f983051 (pid, vers, jd) all(pid=$($po.obnm))" | cstate rs
+        $po.rs = Submit-Celin.AIS.Query "f983051 (pid, vers, jd) all(pid=$($po.obnm))"
         if ($po.rs.data.grid.detail.length -gt 0) {
             foreach ($ver in $po.rs.data.grid.detail) {
                 [System.Console]::Write("{0}|{1}`r", $ver[0], $ver[1])
                 # Fetch the Version
-                cstate vers $ver[1]
+                $po.vers = $ver[1]
                 if ($po.obnm.StartsWith('R')) {
                     # Ube
-                    Get-Celin.AIS.Ube $po.obnm $po.vers | cstate po
+                    $po.po = Get-Celin.AIS.Ube $po.obnm $po.vers
                 }
                 else {
                     # App
-                    Get-Celin.AIS.Po $po.obnm $po.vers -WithApp | cstate po
+                    $po.po = Get-Celin.AIS.Po $po.obnm $po.vers -WithApp
                 }
                 # Label the version
                 $po.setLabel("$($po.obnm)|$($po.vers)", $false, $true) | Out-Null
